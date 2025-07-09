@@ -12,6 +12,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { MapPin, Plus, Edit, Trash2, Search, Star, Clock, Map } from "lucide-react"
 import type { Destination } from "@/lib/supabase"
+import { supabase } from "@/lib/supabaseClient"
+
 
 export default function DestinationsManager() {
   const [destinations, setDestinations] = useState<Destination[]>([])
@@ -283,13 +285,39 @@ export default function DestinationsManager() {
                 </div>
 
                 <div>
-                  <Label htmlFor="image">Image URL</Label>
-                  <Input
-                    id="image"
-                    value={formData.image}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, image: e.target.value }))}
-                    placeholder="https://example.com/image.jpg"
-                  />
+                <Label htmlFor="image">Upload Image</Label>
+<Input
+  id="image"
+  type="file"
+  accept="image/*"
+  onChange={async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    const { data, error } = await supabase.storage
+      .from('images') // your bucket name
+      .upload(filePath, file);
+
+    if (error) {
+      console.error('Image upload error:', error);
+      alert('Failed to upload image.');
+    } else {
+      const { data: urlData } = supabase.storage
+        .from('images')
+        .getPublicUrl(filePath);
+      const publicUrl = urlData.publicUrl;
+      setFormData((prev) => ({ ...prev, image: publicUrl }));
+    }
+  }}
+/>
+{formData.image && (
+  <img src={formData.image} alt="Preview" className="mt-2 rounded shadow-md h-32 object-cover" />
+)}
+
                 </div>
 
                 <div>

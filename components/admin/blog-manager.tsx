@@ -13,6 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch"
 import { FileText, Plus, Edit, Trash2, Search, Calendar, User, Eye } from "lucide-react"
 import type { BlogPost } from "@/lib/supabase"
+import { supabase } from "@/lib/supabaseClient"
+
 
 export default function BlogManager() {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
@@ -227,13 +229,39 @@ export default function BlogManager() {
                 </div>
 
                 <div>
-                  <Label htmlFor="image">Featured Image URL</Label>
-                  <Input
-                    id="image"
-                    value={formData.image}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, image: e.target.value }))}
-                    placeholder="https://example.com/image.jpg"
-                  />
+                <Label htmlFor="image">Upload Image</Label>
+<Input
+  id="image"
+  type="file"
+  accept="image/*"
+  onChange={async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    const { data, error } = await supabase.storage
+      .from('images') // your bucket name
+      .upload(filePath, file);
+
+    if (error) {
+      console.error('Image upload error:', error);
+      alert('Failed to upload image.');
+    } else {
+      const { data: urlData } = supabase.storage
+        .from('images')
+        .getPublicUrl(filePath);
+      const publicUrl = urlData.publicUrl;
+      setFormData((prev) => ({ ...prev, image: publicUrl }));
+    }
+  }}
+/>
+{formData.image && (
+  <img src={formData.image} alt="Preview" className="mt-2 rounded shadow-md h-32 object-cover" />
+)}
+
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
