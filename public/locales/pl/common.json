@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "home": "Strona Główna",
+    "destinations": "Destynacje",
+    "packages": "Pakiety Turystyczne",
+    "activities": "Aktywności",
+    "blog": "Blog",
+    "about": "O Nas",
+    "contact": "Kontakt",
+    "bookNow": "Zarezerwuj Teraz"
+  },
+  "hero": {
+    "title1": "Odkryj Sri Lankę",
+    "subtitle1": "Doświadcz zapierających dech w piersiach krajobrazów, bogatej kultury i ciepłej gościnności",
+    "accent1": "Perła Oceanu Indyjskiego czeka na Ciebie",
+    "title2": "Starożytne Cuda",
+    "subtitle2": "Odkryj wielowiekowe świątynie i dziedzictwo kulturowe",
+    "accent2": "Gdzie historia ożywa",
+    "title3": "Dzikie Przygody",
+    "subtitle3": "Spotkaj egzotyczną przyrodę w dziewiczych parkach narodowych",
+    "accent3": "Największy spektakl natury",
+    "exploreTours": "Odkryj Wycieczki",
+    "watchVideo": "Obejrzyj Wideo",
+    "scrollDown": "Przewiń w Dół",
+    "stats": {
+      "travelers": "Zadowolonych Podróżników",
+      "rating": "Średnia Ocena",
+      "experience": "Lat Doświadczenia"
+    }
+  },
+  "destinations": {
+    "title": "Popularne Destynacje",
+    "subtitle": "Odkryj najpiękniejsze miejsca Sri Lanki",
+    "viewAll": "Zobacz Wszystkie Destynacje",
+    "exploreMore": "Odkryj Więcej",
+    "startingFrom": "Od"
+  },
+  "packages": {
+    "title": "Pakiety Turystyczne",
+    "subtitle": "Starannie przygotowane doświadczenia dla każdego podróżnika",
+    "duration": "{{count}} Dni",
+    "from": "Od",
+    "bookNow": "Zarezerwuj Teraz",
+    "viewDetails": "Zobacz Szczegóły",
+    "includes": "Zawiera",
+    "accommodation": "Zakwaterowanie",
+    "meals": "Posiłki",
+    "transport": "Transport",
+    "guide": "Profesjonalny Przewodnik"
+  },
+  "activities": {
+    "title": "Aktywności i Doświadczenia",
+    "subtitle": "Niezapomniane przygody czekają na Ciebie",
+    "cultural": "Kulturalne",
+    "adventure": "Przygoda",
+    "wildlife": "Przyroda",
+    "beach": "Plaża",
+    "wellness": "Wellness",
+    "photography": "Fotografia"
+  },
+  "testimonials": {
+    "title": "Co Mówią Nasi Podróżnicy",
+    "subtitle": "Prawdziwe doświadczenia prawdziwych ludzi"
+  },
+  "blog": {
+    "title": "Blog Podróżniczy",
+    "subtitle": "Historie, porady i spostrzeżenia ze Sri Lanki",
+    "readMore": "Czytaj Więcej",
+    "publishedOn": "Opublikowano",
+    "categories": "Kategorie",
+    "tags": "Tagi"
+  },
+  "contact": {
+    "title": "Skontaktuj się z Nami",
+    "subtitle": "Gotowy na rozpoczęcie swojej przygody na Sri Lance? Skontaktuj się z naszymi ekspertami od podróży",
+    "getInTouch": "Skontaktuj się",
+    "visitOffice": "Odwiedź Nasze Biuro",
+    "callUs": "Zadzwoń do Nas",
+    "emailUs": "Napisz do Nas",
+    "officeHours": "Godziny Pracy",
+    "support24": "Wsparcie 24/7 Dostępne",
+    "responseTime": "Odpowiedź w ciągu 2 godzin",
+    "whatsappQuick": "Szybki Kontakt WhatsApp",
+    "whatsappDesc": "Otrzymuj natychmiastowe odpowiedzi na swoje pytania przez WhatsApp",
+    "chatWhatsapp": "Czatuj na WhatsApp",
+    "sendMessage": "Wyślij Nam Wiadomość",
+    "formDesc": "Wypełnij poniższy formularz, a odpowiemy Ci w ciągu 24 godzin",
+    "fullName": "Imię i Nazwisko",
+    "emailAddress": "Adres Email",
+    "phoneNumber": "Numer Telefonu",
+    "tourInterest": "Zainteresowanie Wycieczką",
+    "message": "Wiadomość",
+    "messagePlaceholder": "Opowiedz nam o swoich planach podróży, preferencjach i szczególnych wymaganiach...",
+    "sendingMessage": "Wysyłanie Wiadomości...",
+    "messageSent": "Wiadomość Wysłana!",
+    "thankYou": "Dziękujemy za kontakt. Odpowiemy wkrótce!",
+    "findUs": "Znajdź Nas",
+    "visitOfficeDesc": "Odwiedź nasze biuro w sercu Kolombo",
+    "faq": "Często Zadawane Pytania",
+    "faqDesc": "Szybkie odpowiedzi na częste pytania"
+  },
+  "footer": {
+    "description": "Twój zaufany partner w niezapomnianych przygodach na Sri Lance. Odkryj perłę Oceanu Indyjskiego z naszymi fachowo przygotowanymi wycieczkami i stwórz wspomnienia na całe życie.",
+    "quickLinks": "Szybkie Linki",
+    "contactUs": "Skontaktuj się z Nami",
+    "madeWith": "Stworzone z",
+    "inSriLanka": "na Sri Lance",
+    "privacyPolicy": "Polityka Prywatności",
+    "termsOfService": "Warunki Usługi"
+  },
+  "common": {
+    "loading": "Ładowanie...",
+    "error": "Coś poszło nie tak",
+    "tryAgain": "Spróbuj Ponownie",
+    "search": "Szukaj",
+    "filter": "Filtruj",
+    "sort": "Sortuj",
+    "clear": "Wyczyść",
+    "apply": "Zastosuj",
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "view": "Zobacz",
+    "back": "Wstecz",
+    "next": "Dalej",
+    "previous": "Poprzedni",
+    "close": "Zamknij",
+    "open": "Otwórz"
+  }
+}

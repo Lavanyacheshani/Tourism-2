@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "destinations": "Reiseziele",
+    "packages": "Reisepakete",
+    "activities": "Aktivitäten",
+    "blog": "Blog",
+    "about": "Über Uns",
+    "contact": "Kontakt",
+    "bookNow": "Jetzt Buchen"
+  },
+  "hero": {
+    "title1": "Entdecken Sie Sri Lanka",
+    "subtitle1": "Erleben Sie atemberaubende Landschaften, reiche Kultur und herzliche Gastfreundschaft",
+    "accent1": "Die Perle des Indischen Ozeans erwartet Sie",
+    "title2": "Antike Wunder",
+    "subtitle2": "Erkunden Sie jahrhundertealte Tempel und kulturelles Erbe",
+    "accent2": "Wo Geschichte zum Leben erwacht",
+    "title3": "Wilde Abenteuer",
+    "subtitle3": "Begegnen Sie exotischen Wildtieren in unberührten Nationalparks",
+    "accent3": "Das größte Spektakel der Natur",
+    "exploreTours": "Touren Erkunden",
+    "watchVideo": "Video Ansehen",
+    "scrollDown": "Nach Unten Scrollen",
+    "stats": {
+      "travelers": "Zufriedene Reisende",
+      "rating": "Durchschnittliche Bewertung",
+      "experience": "Jahre Erfahrung"
+    }
+  },
+  "destinations": {
+    "title": "Beliebte Reiseziele",
+    "subtitle": "Entdecken Sie die schönsten Orte Sri Lankas",
+    "viewAll": "Alle Reiseziele Anzeigen",
+    "exploreMore": "Mehr Erkunden",
+    "startingFrom": "Ab"
+  },
+  "packages": {
+    "title": "Reisepakete",
+    "subtitle": "Sorgfältig gestaltete Erlebnisse für jeden Reisenden",
+    "duration": "{{count}} Tage",
+    "from": "Ab",
+    "bookNow": "Jetzt Buchen",
+    "viewDetails": "Details Anzeigen",
+    "includes": "Inklusive",
+    "accommodation": "Unterkunft",
+    "meals": "Mahlzeiten",
+    "transport": "Transport",
+    "guide": "Professioneller Reiseführer"
+  },
+  "activities": {
+    "title": "Aktivitäten und Erlebnisse",
+    "subtitle": "Unvergessliche Abenteuer erwarten Sie",
+    "cultural": "Kulturell",
+    "adventure": "Abenteuer",
+    "wildlife": "Tierwelt",
+    "beach": "Strand",
+    "wellness": "Wellness",
+    "photography": "Fotografie"
+  },
+  "testimonials": {
+    "title": "Was Unsere Reisenden Sagen",
+    "subtitle": "Echte Erfahrungen von echten Menschen"
+  },
+  "blog": {
+    "title": "Reise-Blog",
+    "subtitle": "Geschichten, Tipps und Einblicke aus Sri Lanka",
+    "readMore": "Mehr Lesen",
+    "publishedOn": "Veröffentlicht am",
+    "categories": "Kategorien",
+    "tags": "Schlagwörter"
+  },
+  "contact": {
+    "title": "Kontaktieren Sie Uns",
+    "subtitle": "Bereit, Ihr sri-lankisches Abenteuer zu beginnen? Kontaktieren Sie unsere Reiseexperten",
+    "getInTouch": "Kontakt Aufnehmen",
+    "visitOffice": "Besuchen Sie Unser Büro",
+    "callUs": "Rufen Sie Uns An",
+    "emailUs": "Schreiben Sie Uns",
+    "officeHours": "Bürozeiten",
+    "support24": "24/7 Support Verfügbar",
+    "responseTime": "Antwort innerhalb von 2 Stunden",
+    "whatsappQuick": "Schneller WhatsApp-Kontakt",
+    "whatsappDesc": "Erhalten Sie sofortige Antworten auf Ihre Fragen über WhatsApp",
+    "chatWhatsapp": "Auf WhatsApp Chatten",
+    "sendMessage": "Senden Sie Uns eine Nachricht",
+    "formDesc": "Füllen Sie das untenstehende Formular aus und wir melden uns innerhalb von 24 Stunden bei Ihnen",
+    "fullName": "Vollständiger Name",
+    "emailAddress": "E-Mail-Adresse",
+    "phoneNumber": "Telefonnummer",
+    "tourInterest": "Tour-Interesse",
+    "message": "Nachricht",
+    "messagePlaceholder": "Erzählen Sie uns von Ihren Reiseplänen, Vorlieben und besonderen Anforderungen...",
+    "sendingMessage": "Nachricht Wird Gesendet...",
+    "messageSent": "Nachricht Gesendet!",
+    "thankYou": "Vielen Dank, dass Sie uns kontaktiert haben. Wir melden uns bald bei Ihnen!",
+    "findUs": "Finden Sie Uns",
+    "visitOfficeDesc": "Besuchen Sie unser Büro im Herzen von Colombo",
+    "faq": "Häufig Gestellte Fragen",
+    "faqDesc": "Schnelle Antworten auf häufige Fragen"
+  },
+  "footer": {
+    "description": "Ihr vertrauensvoller Partner für unvergessliche sri-lankische Abenteuer. Entdecken Sie die Perle des Indischen Ozeans mit unseren fachmännisch gestalteten Touren und schaffen Sie Erinnerungen, die ein Leben lang halten.",
+    "quickLinks": "Schnelle Links",
+    "contactUs": "Kontaktieren Sie Uns",
+    "madeWith": "Gemacht mit",
+    "inSriLanka": "in Sri Lanka",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen"
+  },
+  "common": {
+    "loading": "Wird Geladen...",
+    "error": "Etwas ist schief gelaufen",
+    "tryAgain": "Erneut Versuchen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "sort": "Sortieren",
+    "clear": "Löschen",
+    "apply": "Anwenden",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "view": "Anzeigen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Vorherige",
+    "close": "Schließen",
+    "open": "Öffnen"
+  }
+}

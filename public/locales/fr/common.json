@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "destinations": "Destinations",
+    "packages": "Circuits Touristiques",
+    "activities": "Activités",
+    "blog": "Blog",
+    "about": "À Propos",
+    "contact": "Contact",
+    "bookNow": "Réserver Maintenant"
+  },
+  "hero": {
+    "title1": "Découvrez le Sri Lanka",
+    "subtitle1": "Vivez des paysages à couper le souffle, une culture riche et une hospitalité chaleureuse",
+    "accent1": "La Perle de l'Océan Indien vous attend",
+    "title2": "Merveilles Anciennes",
+    "subtitle2": "Explorez des temples séculaires et un patrimoine culturel",
+    "accent2": "Où l'histoire prend vie",
+    "title3": "Aventures Sauvages",
+    "subtitle3": "Rencontrez une faune exotique dans des parcs nationaux préservés",
+    "accent3": "Le plus grand spectacle de la nature",
+    "exploreTours": "Explorer les Circuits",
+    "watchVideo": "Regarder la Vidéo",
+    "scrollDown": "Faire Défiler",
+    "stats": {
+      "travelers": "Voyageurs Satisfaits",
+      "rating": "Note Moyenne",
+      "experience": "Années d'Expérience"
+    }
+  },
+  "destinations": {
+    "title": "Destinations Phares",
+    "subtitle": "Découvrez les plus beaux endroits du Sri Lanka",
+    "viewAll": "Voir Toutes les Destinations",
+    "exploreMore": "Explorer Plus",
+    "startingFrom": "À partir de"
+  },
+  "packages": {
+    "title": "Circuits Touristiques",
+    "subtitle": "Expériences soigneusement conçues pour chaque voyageur",
+    "duration": "{{count}} Jours",
+    "from": "À partir de",
+    "bookNow": "Réserver Maintenant",
+    "viewDetails": "Voir les Détails",
+    "includes": "Inclus",
+    "accommodation": "Hébergement",
+    "meals": "Repas",
+    "transport": "Transport",
+    "guide": "Guide Professionnel"
+  },
+  "activities": {
+    "title": "Activités et Expériences",
+    "subtitle": "Des aventures inoubliables vous attendent",
+    "cultural": "Culturel",
+    "adventure": "Aventure",
+    "wildlife": "Faune",
+    "beach": "Plage",
+    "wellness": "Bien-être",
+    "photography": "Photographie"
+  },
+  "testimonials": {
+    "title": "Ce Que Disent Nos Voyageurs",
+    "subtitle": "Expériences réelles de vraies personnes"
+  },
+  "blog": {
+    "title": "Blog de Voyage",
+    "subtitle": "Histoires, conseils et aperçus du Sri Lanka",
+    "readMore": "Lire Plus",
+    "publishedOn": "Publié le",
+    "categories": "Catégories",
+    "tags": "Étiquettes"
+  },
+  "contact": {
+    "title": "Contactez-Nous",
+    "subtitle": "Prêt à commencer votre aventure sri-lankaise ? Contactez nos experts en voyage",
+    "getInTouch": "Entrer en Contact",
+    "visitOffice": "Visitez Notre Bureau",
+    "callUs": "Appelez-Nous",
+    "emailUs": "Envoyez-nous un Email",
+    "officeHours": "Heures de Bureau",
+    "support24": "Support 24h/24 Disponible",
+    "responseTime": "Réponse sous 2 heures",
+    "whatsappQuick": "Contact Rapide WhatsApp",
+    "whatsappDesc": "Obtenez des réponses instantanées à vos questions via WhatsApp",
+    "chatWhatsapp": "Chatter sur WhatsApp",
+    "sendMessage": "Envoyez-nous un Message",
+    "formDesc": "Remplissez le formulaire ci-dessous et nous vous répondrons sous 24 heures",
+    "fullName": "Nom Complet",
+    "emailAddress": "Adresse Email",
+    "phoneNumber": "Numéro de Téléphone",
+    "tourInterest": "Intérêt Touristique",
+    "message": "Message",
+    "messagePlaceholder": "Parlez-nous de vos projets de voyage, préférences et exigences spécifiques...",
+    "sendingMessage": "Envoi du Message...",
+    "messageSent": "Message Envoyé !",
+    "thankYou": "Merci de nous avoir contactés. Nous vous répondrons bientôt !",
+    "findUs": "Nous Trouver",
+    "visitOfficeDesc": "Visitez notre bureau au cœur de Colombo",
+    "faq": "Questions Fréquemment Posées",
+    "faqDesc": "Réponses rapides aux questions courantes"
+  },
+  "footer": {
+    "description": "Votre partenaire de confiance pour des aventures sri-lankaises inoubliables. Découvrez la perle de l'océan Indien avec nos circuits expertement conçus et créez des souvenirs qui durent toute une vie.",
+    "quickLinks": "Liens Rapides",
+    "contactUs": "Contactez-Nous",
+    "madeWith": "Fait avec",
+    "inSriLanka": "au Sri Lanka",
+    "privacyPolicy": "Politique de Confidentialité",
+    "termsOfService": "Conditions de Service"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Quelque chose s'est mal passé",
+    "tryAgain": "Réessayer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "clear": "Effacer",
+    "apply": "Appliquer",
+    "cancel": "Annuler",
+    "save": "Sauvegarder",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Voir",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "close": "Fermer",
+    "open": "Ouvrir"
+  }
+}

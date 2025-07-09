@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "home": "Home",
+    "destinations": "Destinations",
+    "packages": "Tour Packages",
+    "activities": "Activities",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "bookNow": "Book Now"
+  },
+  "hero": {
+    "title1": "Discover Sri Lanka",
+    "subtitle1": "Experience breathtaking landscapes, rich culture, and warm hospitality",
+    "accent1": "The Pearl of the Indian Ocean awaits",
+    "title2": "Ancient Wonders",
+    "subtitle2": "Explore centuries-old temples and cultural heritage",
+    "accent2": "Where history comes alive",
+    "title3": "Wild Adventures",
+    "subtitle3": "Encounter exotic wildlife in pristine national parks",
+    "accent3": "Nature's greatest spectacle",
+    "exploreTours": "Explore Tours",
+    "watchVideo": "Watch Video",
+    "scrollDown": "Scroll Down",
+    "stats": {
+      "travelers": "Happy Travelers",
+      "rating": "Average Rating",
+      "experience": "Years Experience"
+    }
+  },
+  "destinations": {
+    "title": "Featured Destinations",
+    "subtitle": "Discover the most beautiful places in Sri Lanka",
+    "viewAll": "View All Destinations",
+    "exploreMore": "Explore More",
+    "startingFrom": "Starting from"
+  },
+  "packages": {
+    "title": "Tour Packages",
+    "subtitle": "Carefully crafted experiences for every traveler",
+    "duration": "{{count}} Days",
+    "from": "From",
+    "bookNow": "Book Now",
+    "viewDetails": "View Details",
+    "includes": "Includes",
+    "accommodation": "Accommodation",
+    "meals": "Meals",
+    "transport": "Transport",
+    "guide": "Professional Guide"
+  },
+  "activities": {
+    "title": "Activities & Experiences",
+    "subtitle": "Unforgettable adventures await you",
+    "cultural": "Cultural",
+    "adventure": "Adventure",
+    "wildlife": "Wildlife",
+    "beach": "Beach",
+    "wellness": "Wellness",
+    "photography": "Photography"
+  },
+  "testimonials": {
+    "title": "What Our Travelers Say",
+    "subtitle": "Real experiences from real people"
+  },
+  "blog": {
+    "title": "Travel Blog",
+    "subtitle": "Stories, tips, and insights from Sri Lanka",
+    "readMore": "Read More",
+    "publishedOn": "Published on",
+    "categories": "Categories",
+    "tags": "Tags"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Ready to start your Sri Lankan adventure? Get in touch with our travel experts",
+    "getInTouch": "Get in Touch",
+    "visitOffice": "Visit Our Office",
+    "callUs": "Call Us",
+    "emailUs": "Email Us",
+    "officeHours": "Office Hours",
+    "support24": "24/7 Support Available",
+    "responseTime": "Response within 2 hours",
+    "whatsappQuick": "Quick WhatsApp Contact",
+    "whatsappDesc": "Get instant responses to your queries via WhatsApp",
+    "chatWhatsapp": "Chat on WhatsApp",
+    "sendMessage": "Send Us a Message",
+    "formDesc": "Fill out the form below and we'll get back to you within 24 hours",
+    "fullName": "Full Name",
+    "emailAddress": "Email Address",
+    "phoneNumber": "Phone Number",
+    "tourInterest": "Tour Interest",
+    "message": "Message",
+    "messagePlaceholder": "Tell us about your travel plans, preferences, and any specific requirements...",
+    "sendingMessage": "Sending Message...",
+    "messageSent": "Message Sent!",
+    "thankYou": "Thank you for contacting us. We'll get back to you soon!",
+    "findUs": "Find Us",
+    "visitOfficeDesc": "Visit our office in the heart of Colombo",
+    "faq": "Frequently Asked Questions",
+    "faqDesc": "Quick answers to common questions"
+  },
+  "footer": {
+    "description": "Your trusted partner for unforgettable Sri Lankan adventures. Discover the pearl of the Indian Ocean with our expertly crafted tours and create memories that last a lifetime.",
+    "quickLinks": "Quick Links",
+    "contactUs": "Contact Us",
+    "madeWith": "Made with",
+    "inSriLanka": "in Sri Lanka",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "tryAgain": "Try Again",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear": "Clear",
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open"
+  }
+}
