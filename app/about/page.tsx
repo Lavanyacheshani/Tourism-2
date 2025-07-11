@@ -1,322 +1,157 @@
-"use client"
+import React from 'react';
+import { Users, Award, Globe, Heart } from 'lucide-react';
 
-import { useState } from "react"
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Users, Award, Globe, Heart, CheckCircle } from "lucide-react"
-
-const timelineEvents = [
-  {
-    year: "2009",
-    title: "Company Founded",
-    description: "Started as a small family business with a passion for showcasing Sri Lanka's beauty",
-    icon: "🌱",
-  },
-  {
-    year: "2012",
-    title: "First 1000 Travelers",
-    description: "Reached our first milestone of serving 1000 happy travelers",
-    icon: "🎯",
-  },
-  {
-    year: "2015",
-    title: "Award Recognition",
-    description: 'Received "Best Local Tour Operator" award from Sri Lanka Tourism Board',
-    icon: "🏆",
-  },
-  {
-    year: "2018",
-    title: "Digital Transformation",
-    description: "Launched our online platform and mobile-friendly booking system",
-    icon: "💻",
-  },
-  {
-    year: "2020",
-    title: "Sustainable Tourism",
-    description: "Pioneered eco-friendly and sustainable tourism practices",
-    icon: "🌿",
-  },
-  {
-    year: "2024",
-    title: "10,000+ Happy Travelers",
-    description: "Celebrating over 10,000 satisfied customers from around the world",
-    icon: "🎉",
-  },
-]
-
-const teamMembers = [
-  {
-    name: "Rajesh Perera",
-    role: "Founder & CEO",
-    image: "/placeholder.svg?height=300&width=300",
-    bio: "15+ years in tourism industry, passionate about sustainable travel",
-    specialties: ["Cultural Tours", "Business Development"],
-  },
-  {
-    name: "Samantha Silva",
-    role: "Head of Operations",
-    image: "/placeholder.svg?height=300&width=300",
-    bio: "Expert in logistics and customer experience management",
-    specialties: ["Operations", "Customer Service"],
-  },
-  {
-    name: "Dinesh Fernando",
-    role: "Wildlife Expert",
-    image: "/placeholder.svg?height=300&width=300",
-    bio: "Marine biologist and wildlife photographer with 12+ years experience",
-    specialties: ["Wildlife Tours", "Photography"],
-  },
-  {
-    name: "Priya Jayawardena",
-    role: "Cultural Specialist",
-    image: "/placeholder.svg?height=300&width=300",
-    bio: "Historian and cultural expert specializing in ancient Sri Lankan heritage",
-    specialties: ["Cultural Heritage", "Historical Tours"],
-  },
-]
-
-const values = [
-  {
-    icon: <Heart className="h-8 w-8 text-emerald-600" />,
-    title: "Passion for Sri Lanka",
-    description: "We are deeply passionate about our beautiful island and love sharing its wonders with the world.",
-  },
-  {
-    icon: <Users className="h-8 w-8 text-emerald-600" />,
-    title: "Customer First",
-    description: "Every decision we make is centered around creating unforgettable experiences for our travelers.",
-  },
-  {
-    icon: <Globe className="h-8 w-8 text-emerald-600" />,
-    title: "Sustainable Tourism",
-    description:
-      "We are committed to responsible tourism that benefits local communities and preserves our environment.",
-  },
-  {
-    icon: <Award className="h-8 w-8 text-emerald-600" />,
-    title: "Excellence",
-    description: "We strive for excellence in every aspect of our service, from planning to execution.",
-  },
-]
-
-export default function AboutPage() {
-  const [activeTeamMember, setActiveTeamMember] = useState<number | null>(null)
-
+const About: React.FC = () => {
   return (
-    <div className="min-h-screen pt-20">
-      {/* Hero Section */}
-      <section className="relative h-96 bg-gradient-to-r from-emerald-600 to-teal-600">
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 container mx-auto px-4 h-full flex items-center justify-center text-center text-white">
-          <div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-4">About Planet Holiday</h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-              Your trusted partner in discovering the magic of Sri Lanka for over 15 years
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Story */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Our Story</h2>
-            <p className="text-xl text-gray-600 leading-relaxed">
-              Planet Holiday was born from a simple dream: to share the incredible beauty, rich culture, and warm
-              hospitality of Sri Lanka with travelers from around the world. What started as a small family business has
-              grown into one of Sri Lanka's most trusted tour operators, but our core values remain unchanged.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <Image
-                src="/placeholder.svg?height=500&width=600"
-                alt="Our story"
-                width={600}
-                height={500}
-                className="rounded-lg shadow-lg"
-              />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Why Choose Planet Holiday?</h3>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-emerald-600 mr-3 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Local Expertise</h4>
-                    <p className="text-gray-600">
-                      Born and raised in Sri Lanka, we know every hidden gem and secret spot.
-                    </p>
-                  </div>
+    <div className="pt-24 min-h-screen bg-gradient-to-b from-white via-emerald-50/40 to-teal-50/60">
+      {/* Story Section */}
+      <section className="py-20 bg-gradient-to-br from-white via-emerald-50 to-teal-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center bg-white/80 rounded-3xl shadow-xl p-10 md:p-16">
+            <div className="animate-slide-in-left">
+              <h2 className="text-4xl lg:text-5xl font-extrabold text-emerald-700 mb-6 tracking-tight">
+                Our Story
+              </h2>
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+                Founded in 2015, Planet Holiday emerged from a passion for sharing Sri Lanka's incredible beauty with the world. What started as a small family business has grown into the island's premier tour operator, but we've never lost sight of our core values: authentic experiences, personal service, and sustainable tourism.
+              </p>
+              <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                Every journey we craft tells a story – of ancient kingdoms and modern adventures, of pristine beaches and misty mountains, of warm smiles and unforgettable moments. We don't just show you Sri Lanka; we help you feel its heartbeat.
+              </p>
+              <div className="flex gap-6">
+                <div className="flex-1 text-center p-6 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl shadow-md">
+                  <div className="text-3xl font-extrabold text-emerald-600 mb-1">10,000+</div>
+                  <div className="text-sm text-gray-500">Happy Travelers</div>
                 </div>
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-emerald-600 mr-3 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Personalized Service</h4>
-                    <p className="text-gray-600">Every tour is tailored to your interests, budget, and travel style.</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-emerald-600 mr-3 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">24/7 Support</h4>
-                    <p className="text-gray-600">
-                      Our team is always available to ensure your journey is smooth and memorable.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-emerald-600 mr-3 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Sustainable Practices</h4>
-                    <p className="text-gray-600">
-                      We're committed to responsible tourism that benefits local communities.
-                    </p>
-                  </div>
+                <div className="flex-1 text-center p-6 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl shadow-md">
+                  <div className="text-3xl font-extrabold text-emerald-600 mb-1">9 Years</div>
+                  <div className="text-sm text-gray-500">Of Excellence</div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline */}
-      <section className="py-20 bg-gradient-to-b from-emerald-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Journey</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From humble beginnings to becoming Sri Lanka's premier tour operator
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="relative">
-              {/* Timeline Line */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-emerald-200"></div>
-
-              {timelineEvents.map((event, index) => (
-                <div
-                  key={index}
-                  className={`relative flex items-center mb-12 ${index % 2 === 0 ? "flex-row" : "flex-row-reverse"}`}
-                >
-                  <div className={`w-1/2 ${index % 2 === 0 ? "pr-8 text-right" : "pl-8 text-left"}`}>
-                    <Card className="bg-white shadow-lg border-0 hover:shadow-xl transition-shadow">
-                      <CardContent className="p-6">
-                        <div className="text-4xl mb-3">{event.icon}</div>
-                        <Badge className="bg-emerald-600 text-white mb-3">{event.year}</Badge>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">{event.title}</h3>
-                        <p className="text-gray-600">{event.description}</p>
-                      </CardContent>
-                    </Card>
-                  </div>
-
-                  {/* Timeline Dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-emerald-600 rounded-full border-4 border-white shadow-lg"></div>
-                </div>
-              ))}
+            <div className="animate-slide-in-right flex justify-center">
+              <img
+                src="/contact/1.jpg"
+                alt="About Us"
+                className="rounded-3xl shadow-2xl w-full max-w-md object-cover border-4 border-emerald-100"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Our Values */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
+      {/* Values Section */}
+      <section className="py-20 bg-gradient-to-br from-emerald-50 via-white to-teal-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Values</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">The principles that guide everything we do</p>
+            <h2 className="text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400 bg-clip-text text-transparent drop-shadow-lg animate-fade-in-up">
+              Why Choose Us
+            </h2>
+            <div className="flex justify-center">
+              <span className="inline-block w-24 h-1 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 mb-6 animate-grow-in"></span>
+            </div>
+            <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto font-medium animate-fade-in-up mb-2">
+              <span className="bg-white/70 px-3 py-1 rounded-xl shadow-sm">We're not just another tour company. Here's what makes us different.</span>
+            </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <Card
-                key={index}
-                className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-              >
-                <CardContent className="p-8">
-                  <div className="flex justify-center mb-4">{value.icon}</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
-                  <p className="text-gray-600">{value.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <div className="bg-white/90 rounded-2xl shadow-lg p-8 text-center hover:shadow-emerald-200 transition-shadow duration-300 animate-scale-in">
+              <div className="bg-gradient-to-br from-emerald-100 to-teal-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5 shadow">
+                <Users className="w-8 h-8 text-emerald-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Local Expertise</h3>
+              <p className="text-gray-600">
+                Born and raised in Sri Lanka, we know every hidden gem and secret spot
+              </p>
+            </div>
+            <div className="bg-white/90 rounded-2xl shadow-lg p-8 text-center hover:shadow-emerald-200 transition-shadow duration-300 animate-scale-in" style={{ animationDelay: '0.1s' }}>
+              <div className="bg-gradient-to-br from-emerald-100 to-teal-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5 shadow">
+                <Award className="w-8 h-8 text-emerald-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Award Winning</h3>
+              <p className="text-gray-600">
+                Recognized for excellence in sustainable tourism and customer service
+              </p>
+            </div>
+            <div className="bg-white/90 rounded-2xl shadow-lg p-8 text-center hover:shadow-emerald-200 transition-shadow duration-300 animate-scale-in" style={{ animationDelay: '0.2s' }}>
+              <div className="bg-gradient-to-br from-emerald-100 to-teal-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5 shadow">
+                <Globe className="w-8 h-8 text-emerald-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Sustainable Travel</h3>
+              <p className="text-gray-600">
+                Committed to preserving Sri Lanka's natural beauty for future generations
+              </p>
+                  </div>
+            <div className="bg-white/90 rounded-2xl shadow-lg p-8 text-center hover:shadow-emerald-200 transition-shadow duration-300 animate-scale-in" style={{ animationDelay: '0.3s' }}>
+              <div className="bg-gradient-to-br from-emerald-100 to-teal-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5 shadow">
+                <Heart className="w-8 h-8 text-emerald-600" />
+                </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Personal Touch</h3>
+              <p className="text-gray-600">
+                Every tour is personalized to create memories that last a lifetime
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-gradient-to-b from-emerald-50 to-white">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-gradient-to-br from-white via-teal-50 to-emerald-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The passionate individuals who make your Sri Lankan adventure possible
+            <h2 className="text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400 bg-clip-text text-transparent drop-shadow-lg animate-fade-in-up">
+              Meet Our Team
+            </h2>
+            <div className="flex justify-center">
+              <span className="inline-block w-24 h-1 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 mb-6 animate-grow-in"></span>
+            </div>
+            <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto font-medium animate-fade-in-up mb-2">
+              <span className="bg-white/70 px-3 py-1 rounded-xl shadow-sm">The passionate people behind your perfect Sri Lankan adventure</span>
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <Card
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            {[
+              {
+                name: 'Rajesh Fernando',
+                role: 'Founder & CEO',
+                image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg',
+                bio: 'With 15 years in tourism, Rajesh founded Planet Holiday to share his love for Sri Lanka with the world.',
+              },
+              {
+                name: 'Priya Wickramasinghe',
+                role: 'Head of Operations',
+                image: 'https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg',
+                bio: 'Priya ensures every detail of your journey is perfectly orchestrated, from arrival to departure.',
+              },
+              {
+                name: 'Chaminda Silva',
+                role: 'Lead Guide',
+                image: 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg',
+                bio: 'Our master storyteller who brings Sri Lankan history and culture to life with every tour.',
+              },
+            ].map((member, index) => (
+              <div
                 key={index}
-                className="group cursor-pointer border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-                onMouseEnter={() => setActiveTeamMember(index)}
-                onMouseLeave={() => setActiveTeamMember(null)}
+                className="text-center animate-scale-in bg-white/90 rounded-3xl shadow-xl p-10 hover:shadow-emerald-200 transition-shadow duration-300"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="relative overflow-hidden">
-                  <Image
-                    src={member.image || "/placeholder.svg"}
+                <div className="relative mb-8 flex justify-center">
+                  <img
+                    src={member.image}
                     alt={member.name}
-                    width={300}
-                    height={300}
-                    className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-40 h-40 rounded-full object-cover shadow-lg border-4 border-emerald-100"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                  <p className="text-emerald-600 font-medium mb-3">{member.role}</p>
-                  <p className="text-gray-600 text-sm mb-4">{member.bio}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {member.specialties.map((specialty, idx) => (
-                      <Badge key={idx} variant="secondary" className="text-xs">
-                        {specialty}
-                      </Badge>
-                    ))}
+                <h3 className="text-2xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                <p className="text-emerald-600 font-semibold mb-2">{member.role}</p>
+                <p className="text-gray-600 max-w-xs mx-auto">{member.bio}</p>
                   </div>
-                </CardContent>
-              </Card>
             ))}
           </div>
         </div>
       </section>
-
-      {/* Stats Section */}
-      <section className="py-20 bg-emerald-600 text-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">10,000+</div>
-              <div className="text-emerald-100">Happy Travelers</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">4.9</div>
-              <div className="text-emerald-100">Average Rating</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">50+</div>
-              <div className="text-emerald-100">Tour Packages</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">15</div>
-              <div className="text-emerald-100">Years Experience</div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
-  )
-}
+  );
+};
+
+export default About;

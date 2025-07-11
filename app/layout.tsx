@@ -4,8 +4,9 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { LanguageProvider } from "@/contexts/LanguageContext"
 import { AdminAuthProvider } from "@/contexts/AdminAuthContext"
-import Header from "@/components/header"
 import Footer from "@/components/footer"
+import Header from "@/components/header"
+import Navbar from "@/components/navbar"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -20,12 +21,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
   return (
     <html lang="en">
       <body className={inter.className}>
         <AdminAuthProvider>
           <LanguageProvider>
-            <Header />
+            <Navbar />
+            {pathname === '/' && <Header />}
             <main>{children}</main>
             <Footer />
           </LanguageProvider>

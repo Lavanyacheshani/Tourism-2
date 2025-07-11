@@ -75,35 +75,35 @@ export default function AdminPage() {
           <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:grid-cols-5 bg-white p-1 rounded-lg shadow-sm">
             <TabsTrigger
               value="dashboard"
-              className="flex items-center space-x-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
+              className="flex items-center space-x-2 text-black data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
             >
               <BarChart3 className="h-4 w-4" />
               <span className="hidden sm:inline">Dashboard</span>
             </TabsTrigger>
             <TabsTrigger
               value="packages"
-              className="flex items-center space-x-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
+              className="flex items-center space-x-2 text-black data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
             >
               <Package className="h-4 w-4" />
               <span className="hidden sm:inline">Packages</span>
             </TabsTrigger>
             <TabsTrigger
               value="destinations"
-              className="flex items-center space-x-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
+              className="flex items-center space-x-2 text-black data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
             >
               <MapPin className="h-4 w-4" />
               <span className="hidden sm:inline">Destinations</span>
             </TabsTrigger>
             <TabsTrigger
               value="activities"
-              className="flex items-center space-x-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
+              className="flex items-center space-x-2 text-black data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
             >
               <Activity className="h-4 w-4" />
               <span className="hidden sm:inline">Activities</span>
             </TabsTrigger>
             <TabsTrigger
               value="blog"
-              className="flex items-center space-x-2 data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
+              className="flex items-center space-x-2 text-black data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
             >
               <FileText className="h-4 w-4" />
               <span className="hidden sm:inline">Blog</span>

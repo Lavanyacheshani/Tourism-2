@@ -32,6 +32,7 @@ export default function DestinationsManager() {
     difficulty: "Easy",
     best_time: "",
     duration: "",
+    groupSize: "",
   })
 
   /** Remove keys whose values are undefined / ""  and coerce numerics. */
@@ -40,7 +41,11 @@ export default function DestinationsManager() {
     Object.entries(data).forEach(([key, value]) => {
       if (value !== undefined && value !== "" && !(Array.isArray(value) && value.length === 0)) {
         // rating must be numeric in the DB
-        cleaned[key] = key === "rating" ? Number(value) : value
+        if (key === "groupSize") {
+          cleaned["group_size"] = value
+        } else {
+          cleaned[key] = key === "rating" ? Number(value) : value
+        }
       }
     })
     return cleaned
@@ -133,6 +138,7 @@ export default function DestinationsManager() {
       difficulty: destination.difficulty,
       best_time: destination.best_time,
       duration: destination.duration,
+      groupSize: destination.group_size || "",
     })
     setIsEditing(true)
   }
@@ -151,6 +157,7 @@ export default function DestinationsManager() {
       difficulty: "Easy",
       best_time: "",
       duration: "",
+      groupSize: "",
     })
   }
 
@@ -285,6 +292,16 @@ export default function DestinationsManager() {
                 </div>
 
                 <div>
+                  <Label htmlFor="groupSize">Group Size</Label>
+                  <Input
+                    id="groupSize"
+                    value={formData.groupSize}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, groupSize: e.target.value }))}
+                    placeholder="e.g., 2-10 people"
+                  />
+                </div>
+
+                <div>
                 <Label htmlFor="image">Upload Image</Label>
 <Input
   id="image"
@@ -363,7 +380,7 @@ export default function DestinationsManager() {
                   >
                     {loading ? "Saving..." : selectedDestination ? "Update Destination" : "Create Destination"}
                   </Button>
-                  <Button type="button" variant="outline" onClick={resetForm}>
+                  <Button type="button" variant="outline" onClick={resetForm} className="text-black border-gray-300 hover:bg-gray-100">
                     Cancel
                   </Button>
                 </div>
@@ -435,7 +452,7 @@ export default function DestinationsManager() {
                       </div>
                     </div>
                     <div className="flex space-x-2">
-                      <Button size="sm" variant="outline" onClick={() => handleEdit(destination)} className="flex-1">
+                      <Button size="sm" variant="outline" onClick={() => handleEdit(destination)} className="flex-1 text-black border-gray-300 hover:bg-gray-100">
                         <Edit className="h-4 w-4 mr-1" />
                         Edit
                       </Button>
@@ -443,7 +460,7 @@ export default function DestinationsManager() {
                         size="sm"
                         variant="outline"
                         onClick={() => handleDelete(destination.id)}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-red-600 border-gray-300 hover:text-red-700 hover:bg-red-50"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

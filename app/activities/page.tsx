@@ -1,17 +1,30 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Star, Clock, Users, MapPin, Camera, Waves, Mountain, TreePine, Compass } from "lucide-react"
+import { Calendar, Users, Clock, Star } from "lucide-react"
 
-const categories = ["All", "Marine", "Water Sports", "Trekking", "Wildlife", "Adventure", "Aerial"]
+// Category definitions matching the provided UI
+const categories = [
+  { id: "all", label: "All Activities" },
+  { id: "adventure", label: "Adventure" },
+  { id: "marine", label: "Marine" },
+  { id: "cultural", label: "Cultural" },
+  { id: "wildlife", label: "Wildlife" },
+]
+
+// Helper for difficulty color
+const getDifficultyColor = (difficulty: string) => {
+  switch (difficulty) {
+    case "Easy": return "bg-green-100 text-green-800"
+    case "Moderate": return "bg-yellow-100 text-yellow-800"
+    case "Challenging": return "bg-red-100 text-red-800"
+    default: return "bg-gray-100 text-gray-800"
+  }
+}
 
 export default function ActivitiesPage() {
   const [activities, setActivities] = useState<any[]>([])
-  const [activeCategory, setActiveCategory] = useState("All")
+  const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedActivity, setSelectedActivity] = useState<any | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -33,104 +46,201 @@ export default function ActivitiesPage() {
     fetchActivities()
   }, [])
 
-  const filteredActivities =
-    activeCategory === "All"
-      ? activities
-      : activities.filter((activity) => activity.category === activeCategory)
+  // Map backend fields to UI fields
+  const mappedActivities = activities.map((a) => ({
+    id: a.id,
+    title: a.name, // backend: name
+    image: a.image || "/placeholder.svg",
+    video: a.video_background ? a.video_background : undefined,
+    description: a.description,
+    duration: a.duration,
+    groupSize: a.group_size,
+    difficulty: a.difficulty,
+    rating: a.rating,
+    category: a.category?.toLowerCase(),
+    location: a.location,
+    highlights: Array.isArray(a.highlights) ? a.highlights : (a.highlights ? JSON.parse(a.highlights) : []),
+  }))
 
-  const openBookingForm = (activity: any) => {
-    const message = `Hi! I'm interested in booking "${activity.name}" activity. Can you provide more details?`
-    const whatsappUrl = `https://wa.me/+94771234567?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, "_blank")
-  }
+  // Show all activities for 'all', otherwise filter
+  const filteredActivities = selectedCategory === "all"
+    ? mappedActivities
+    : mappedActivities.filter((activity) => activity.category === selectedCategory)
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative h-96 bg-gradient-to-r from-emerald-600 to-teal-600">
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 container mx-auto px-4 h-full flex items-center justify-center text-center text-white">
-          <div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-4">Adventure Activities</h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-              Thrilling experiences and unforgettable adventures across Sri Lanka
+      <section className="relative py-20 bg-gradient-to-r from-jungle-600 to-teal-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center text-white">
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 animate-slide-up">
+              Adventure Activities
+            </h1>
+            <p className="text-xl lg:text-2xl max-w-3xl mx-auto animate-slide-up">
+              From adrenaline-pumping adventures to peaceful cultural experiences
             </p>
           </div>
         </div>
       </section>
 
+      {/* Activities Section */}
+      <section className="py-20 bg-gradient-to-r from-emerald-50 to-teal-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Category Filter */}
-      <div className="flex flex-wrap justify-center gap-4 my-8">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setActiveCategory(category)}
-            className={`px-8 py-4 rounded-full font-semibold transition-all duration-500 transform hover:scale-105 ${
-              activeCategory === category
-                ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-glow-lg"
-                : "bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-gradient-to-r hover:from-emerald-100 hover:to-teal-100 hover:text-emerald-700 shadow-lg hover:shadow-xl border border-white/50"
-            }`}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                  selectedCategory === category.id
+                    ? 'bg-primary-600 text-white shadow-lg'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {category.label}
+              </button>
+            ))}
+          </div>
 
       {/* Activities Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {loading ? (
-          <div className="col-span-full text-center text-lg">Loading activities...</div>
-        ) : filteredActivities.length === 0 ? (
-          <div className="col-span-full text-center text-lg">No activities found.</div>
-        ) : (
-          filteredActivities.map((activity, index) => (
-            <Card key={activity.id || index} className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-4 hover:rotate-1 card-glass">
-              <div className="relative overflow-hidden">
-                <Image
-                  src={activity.image || "/placeholder.svg"}
-                  alt={activity.name}
-                  width={600}
-                  height={400}
-                  className="w-full h-72 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/50 transition-all duration-500" />
-                <Badge className="absolute top-6 left-6 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold px-4 py-2 shadow-lg transform group-hover:scale-110 transition-all duration-300">
-                  {activity.category}
-                </Badge>
-                <div className="absolute top-6 right-6 flex items-center bg-white/95 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg transform group-hover:scale-110 transition-all duration-300">
-                  <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                  <span className="text-sm font-bold ml-1 text-gray-800">{activity.rating}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {loading ? (
+              <div className="col-span-full text-center text-lg">Loading activities...</div>
+            ) : filteredActivities.length === 0 ? (
+              <div className="col-span-full text-center text-lg">No activities found.</div>
+            ) : (
+              filteredActivities.map((activity, index) => (
+                <div
+                key={activity.id}
+                  className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-scale-in cursor-pointer"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                onClick={() => setSelectedActivity(activity)}
+              >
+                    <div className="relative">
+                    <img
+                      src={activity.image}
+                      alt={activity.title}
+                      className="w-full h-64 object-cover"
+                    />
+                    <div className="absolute top-4 left-4 flex gap-2">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${getDifficultyColor(activity.difficulty)}`}>
+                        {activity.difficulty}
+                      </span>
+                    </div>
+                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
+                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                      <span className="text-sm font-semibold text-gray-800">{activity.rating ? `${activity.rating}/5` : "4.5/5"}</span>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{activity.title}</h3>
+                    <p className="text-gray-600 mb-4 line-clamp-2">{activity.description}</p>
+                    <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-gray-600">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        <span>{activity.duration}</span>
                 </div>
-                <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2 text-shadow-strong group-hover:text-shadow-soft transition-all duration-300">
-                    {activity.name}
-                  </h3>
-                  <div className="flex items-center mb-3 opacity-90">
-                    <MapPin className="h-5 w-5 mr-2" />
-                    <span>{activity.location}</span>
+                      <div className="flex items-center gap-1">
+                        <Users className="w-4 h-4" />
+                        <span>{activity.groupSize}</span>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <span className="flex items-center">
-                      <Clock className="h-4 w-4 mr-1" />
-                      {activity.duration}
-                    </span>
-                    <span className="flex items-center">
-                      <Users className="h-4 w-4 mr-1" />
-                      {activity.group_size}
-                    </span>
+                    </div>
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="flex items-center gap-2">
+                        <Star className="w-5 h-5 text-yellow-500 fill-current" />
+                        <span className="text-base font-semibold text-gray-800">{activity.rating ? `${activity.rating}/5` : "4.5/5"}</span>
+                      </div>
+                      <button className="bg-primary-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-primary-700 transition-colors duration-300">
+                        Book Now
+                      </button>
+                    </div>
                   </div>
-                  <Button
-                    className="mt-4 btn-gradient rounded-full px-6 py-2 font-semibold shadow-lg hover:shadow-glow transform hover:scale-105 transition-all duration-300"
-                    onClick={() => openBookingForm(activity)}
-                  >
-                    Book Now
-                  </Button>
+                    </div>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Activity Modal */}
+      {selectedActivity && (
+        <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-scale-in">
+            <div className="relative">
+              <img
+                src={selectedActivity.image}
+                alt={selectedActivity.title}
+                className="w-full h-80 object-cover"
+              />
+              <button
+                onClick={() => setSelectedActivity(null)}
+                className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2 hover:bg-white transition-colors duration-300"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-8">
+              <div className="flex items-start justify-between mb-6">
+                <div>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-2">{selectedActivity.title}</h3>
+                  <p className="text-gray-600">{selectedActivity.location}</p>
+                </div>
+                <div className="text-right flex items-center gap-2">
+                  <Star className="w-7 h-7 text-yellow-500 fill-current" />
+                  <span className="text-2xl font-bold text-primary-600">{selectedActivity.rating ? `${selectedActivity.rating}/5` : "4.5/5"}</span>
                 </div>
               </div>
-            </Card>
-          ))
-        )}
-      </div>
+              <p className="text-gray-700 mb-6 text-lg leading-relaxed">{selectedActivity.description}</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-6 h-6 text-primary-600" />
+                  <div>
+                    <div className="font-semibold">Duration</div>
+                    <div className="text-gray-600">{selectedActivity.duration}</div>
+                  </div>
+                    </div>
+                <div className="flex items-center gap-3">
+                  <Users className="w-6 h-6 text-primary-600" />
+                  <div>
+                    <div className="font-semibold">Group Size</div>
+                    <div className="text-gray-600">{selectedActivity.groupSize}</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Star className="w-6 h-6 text-primary-600" />
+                  <div>
+                    <div className="font-semibold">Rating</div>
+                    <div className="text-gray-600">{selectedActivity.rating ? `${selectedActivity.rating}/5` : "4.5/5"}</div>
+                        </div>
+                        </div>
+                      </div>
+              <div className="mb-8">
+                <h4 className="text-xl font-semibold text-gray-900 mb-4">What's Included</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {selectedActivity.highlights?.map((highlight: string, index: number) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
+                      <span className="text-gray-700">{highlight}</span>
+                      </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <button className="flex-1 bg-primary-600 text-white py-4 rounded-full font-semibold text-lg hover:bg-primary-700 transition-colors duration-300">
+                  Book This Activity
+                </button>
+                <button className="px-8 py-4 border-2 border-primary-600 text-primary-600 rounded-full font-semibold hover:bg-primary-50 transition-colors duration-300">
+                  Contact Us
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

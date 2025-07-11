@@ -2,86 +2,35 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { MapPin, Star, Camera, Sparkles } from "lucide-react"
+import { MapPin, Star, Camera, Sparkles, Clock, Users, Heart, Map } from "lucide-react"
+import { motion } from "framer-motion"
 
-const destinations = [
-  {
-    id: 1,
-    name: "Sigiriya Rock Fortress",
-    location: "Central Province",
-    image: "/placeholder.svg?height=400&width=600",
-    rating: 4.9,
-    category: "Cultural",
-    description: "Ancient rock fortress and palace ruins surrounded by extensive gardens",
-    color: "emerald",
-    gradient: "from-emerald-500 to-teal-500",
-  },
-  {
-    id: 2,
-    name: "Yala National Park",
-    location: "Southern Province",
-    image: "/placeholder.svg?height=400&width=600",
-    rating: 4.8,
-    category: "Wildlife",
-    description: "Home to leopards, elephants, and diverse wildlife in natural habitat",
-    color: "sunset",
-    gradient: "from-sunset-500 to-ruby-500",
-  },
-  {
-    id: 3,
-    name: "Ella Nine Arches Bridge",
-    location: "Uva Province",
-    image: "/placeholder.svg?height=400&width=600",
-    rating: 4.7,
-    category: "Adventure",
-    description: "Iconic railway bridge surrounded by lush tea plantations",
-    color: "sapphire",
-    gradient: "from-sapphire-500 to-teal-500",
-  },
-  {
-    id: 4,
-    name: "Mirissa Beach",
-    location: "Southern Coast",
-    image: "/placeholder.svg?height=400&width=600",
-    rating: 4.8,
-    category: "Beach",
-    description: "Perfect for whale watching and pristine golden sand beaches",
-    color: "tea",
-    gradient: "from-tea-500 to-sunset-500",
-  },
-  {
-    id: 5,
-    name: "Temple of the Tooth",
-    location: "Kandy",
-    image: "/placeholder.svg?height=400&width=600",
-    rating: 4.9,
-    category: "Cultural",
-    description: "Sacred Buddhist temple housing the relic of Buddha's tooth",
-    color: "ruby",
-    gradient: "from-ruby-500 to-sunset-500",
-  },
-  {
-    id: 6,
-    name: "Adam's Peak",
-    location: "Central Highlands",
-    image: "/placeholder.svg?height=400&width=600",
-    rating: 4.6,
-    category: "Adventure",
-    description: "Sacred mountain peak with breathtaking sunrise views",
-    color: "emerald",
-    gradient: "from-emerald-600 to-sapphire-500",
-  },
-]
-
-const categories = ["All", "Cultural", "Wildlife", "Adventure", "Beach"]
-
-export default function FeaturedDestinations() {
+export default function FeaturedDestinations({ showAll = false }: { showAll?: boolean }) {
   const [activeCategory, setActiveCategory] = useState("All")
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [visibleCards, setVisibleCards] = useState<number[]>([])
+  const [selectedDestination, setSelectedDestination] = useState<any>(null)
+  const [destinations, setDestinations] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchDestinations() {
+      try {
+        const res = await fetch("/api/destinations")
+        const data = await res.json()
+        if (Array.isArray(data)) {
+          setDestinations(data)
+        }
+      } catch (e) {
+        setDestinations([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchDestinations()
+  }, [])
 
   const filteredDestinations =
     activeCategory === "All" ? destinations : destinations.filter((dest) => dest.category === activeCategory)
@@ -105,8 +54,31 @@ export default function FeaturedDestinations() {
     return () => observer.disconnect()
   }, [filteredDestinations])
 
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      Cultural: "from-yellow-500 to-orange-400",
+      Adventure: "from-blue-500 to-indigo-500",
+      Beach: "from-cyan-400 to-blue-400",
+      Nature: "from-green-500 to-emerald-500",
+      Wildlife: "from-amber-600 to-lime-500",
+      Historical: "from-rose-500 to-pink-400",
+    };
+    return colors[category as keyof typeof colors] || "from-gray-500 to-gray-600";
+  }
+
+  const categories = ["All", "Cultural", "Wildlife", "Nature", "Beach", "Historical"];
+
+  // Only show first 6 destinations for the grid
+  const shownDestinations = showAll ? filteredDestinations : filteredDestinations.slice(0, 6);
+
   return (
-    <section className="py-24 bg-gradient-to-br from-slate-50 via-emerald-50/30 to-teal-50/50 relative overflow-hidden">
+    <motion.section
+      className="py-24 bg-gradient-to-b from-white via-emerald-50/30 to-teal-50/50 relative overflow-hidden"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+    >
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-dots opacity-30"></div>
 
@@ -114,20 +86,18 @@ export default function FeaturedDestinations() {
         <div className="text-center mb-20">
           <div className="flex justify-center mb-6">
             <div className="flex items-center space-x-2 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-full px-6 py-2 border border-emerald-200">
-              <Sparkles className="h-4 w-4 text-emerald-600" />
-              <span className="text-sm font-semibold text-emerald-700">Handpicked Destinations</span>
+              <MapPin className="h-5 w-5 text-emerald-600" />
+              <span className="text-emerald-700 font-medium">Discover Amazing Places</span>
             </div>
           </div>
 
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6">
-            <span className="text-gradient">Featured</span>
-            <br />
-            <span className="text-gray-900">Destinations</span>
+            <span className="text-gradient">Featured Destinations</span>
           </h2>
 
           <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-light">
-            Discover Sri Lanka's most captivating locations, from ancient cultural sites to pristine beaches and
-            <span className="font-semibold text-emerald-700"> thrilling wildlife encounters</span>
+            Discover the most breathtaking locations Sri Lanka has to offer, each with its unique charm and
+            <span className="font-semibold text-emerald-700"> unforgettable experiences</span>
           </p>
         </div>
 
@@ -150,84 +120,224 @@ export default function FeaturedDestinations() {
         </div>
 
         {/* Enhanced Destinations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {filteredDestinations.map((destination, index) => (
-            <Card
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {shownDestinations.map((destination, index) => (
+            <div
               key={destination.id}
               data-index={index}
-              className={`destination-card group cursor-pointer overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-4 hover:rotate-1 card-glass ${
+              className={`destination-card group cursor-pointer animate-scale-in-bounce ${
                 visibleCards.includes(index) ? "animate-scale-in" : "opacity-0"
               }`}
+              style={{ animationDelay: `${index * 0.15}s` }}
+              onClick={() => setSelectedDestination(destination)}
               onMouseEnter={() => setHoveredCard(destination.id)}
               onMouseLeave={() => setHoveredCard(null)}
-              style={{
-                animationDelay: `${index * 150}ms`,
-              }}
             >
-              <div className="relative overflow-hidden">
-                <Image
-                  src={destination.image || "/placeholder.svg"}
-                  alt={destination.name}
-                  width={600}
-                  height={400}
-                  className="w-full h-72 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
-                />
+              <div className="relative bg-white rounded-3xl shadow-soft overflow-hidden hover:shadow-soft-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+                {/* Image Container with Overlay Effects */}
+                <div className="relative overflow-hidden h-72">
+                  <Image
+                    src={destination.image || "/placeholder.svg"}
+                    alt={destination.name}
+                    width={600}
+                    height={400}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
 
-                {/* Enhanced Gradient Overlay */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/50 transition-all duration-500`}
-                />
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* Floating Badge */}
-                <Badge
-                  className={`absolute top-6 left-6 bg-gradient-to-r ${destination.gradient} text-white font-semibold px-4 py-2 shadow-lg transform group-hover:scale-110 transition-all duration-300`}
-                >
-                  {destination.category}
-                </Badge>
+                  {/* Category Badge */}
+                  <Badge
+                    className={`absolute top-4 left-4 bg-gradient-to-r ${getCategoryColor(destination.category)} text-white font-semibold px-4 py-2 shadow-lg transform group-hover:scale-110 transition-all duration-300`}
+                  >
+                    {destination.category}
+                  </Badge>
 
-                {/* Enhanced Rating */}
-                <div className="absolute top-6 right-6 flex items-center bg-white/95 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg transform group-hover:scale-110 transition-all duration-300">
-                  <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                  <span className="text-sm font-bold ml-1 text-gray-800">{destination.rating}</span>
+                  {/* Rating Badge */}
+                  <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg transform group-hover:scale-110 transition-all duration-300">
+                    <div className="flex items-center gap-1">
+                      <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                      <span className="text-sm font-bold text-gray-800">{destination.rating}</span>
+                    </div>
+                  </div>
+
+                  {/* Hover Actions */}
+                  <div
+                    className={`absolute bottom-4 left-4 flex gap-2 transition-all duration-500 ${
+                      hoveredCard === destination.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                    }`}
+                  >
+                    <button className="bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-colors duration-300">
+                      <Camera className="w-4 h-4" />
+                    </button>
+                    <button className="bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-colors duration-300">
+                      <Heart className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
 
-                {/* Enhanced Bottom Content */}
-                <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2 text-shadow-strong group-hover:text-shadow-soft transition-all duration-300">
-                    {destination.name}
-                  </h3>
-                  <div className="flex items-center mb-3 opacity-90">
-                    <MapPin className="h-5 w-5 mr-2" />
-                    <span className="font-medium">{destination.location}</span>
+                {/* Enhanced Content */}
+                <div className="p-8">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors duration-300">
+                        {destination.name}
+                      </h3>
+                      <div className="flex items-center mb-3 text-gray-500">
+                        <MapPin className="h-4 w-4 mr-2" />
+                        <span className="font-medium">{destination.location}</span>
+                      </div>
+                      <p className="text-gray-600 line-clamp-2 leading-relaxed">{destination.description}</p>
+                    </div>
                   </div>
-                  <p className="text-sm opacity-90 leading-relaxed mb-4">{destination.description}</p>
 
-                  {/* Hover Action */}
-                  <div
-                    className={`transform transition-all duration-500 ${hoveredCard === destination.id ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
-                  >
-                    <Button size="sm" className="btn-gradient-sapphire rounded-full">
-                      <Camera className="h-4 w-4 mr-2" />
-                      Explore More
-                    </Button>
+                  {/* Stats */}
+                  <div className="flex items-center justify-between text-sm text-gray-500 mb-6">
+                    <div className="flex items-center gap-2">
+                      <Star className="w-4 h-4 text-yellow-500" />
+                      <span>{destination.rating}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-emerald-500" />
+                      <span>{destination.location}</span>
+                    </div>
                   </div>
+
+                  {/* Action Button */}
+                  <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: "0 8px 32px 0 rgba(16, 185, 129, 0.15)" }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-emerald-500/25 transform hover:scale-105 transition-all duration-300 group-hover:from-emerald-500 group-hover:to-teal-500"
+                  >
+                    Explore Destination
+                  </motion.button>
                 </div>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-20">
-          <Button
-            size="lg"
-            className="btn-gradient px-12 py-6 text-lg font-semibold rounded-full shadow-glow-lg hover:shadow-glow transform hover:scale-105 transition-all duration-300"
-          >
-            <Sparkles className="mr-3 h-5 w-5" />
-            View All Destinations
-          </Button>
-        </div>
+        {!showAll && (
+          <div className="text-center mt-20">
+            <Button
+              asChild
+              size="lg"
+              className="btn-gradient px-12 py-6 text-lg font-semibold rounded-full shadow-glow-lg hover:shadow-glow transform hover:scale-105 transition-all duration-300"
+            >
+              <a href="/destinations">
+                <Sparkles className="mr-3 h-5 w-5" />
+                View All Destinations
+              </a>
+            </Button>
+          </div>
+        )}
+
+        {/* Enhanced Modal */}
+        {selectedDestination && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+            <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-scale-in-bounce shadow-2xl">
+              <div className="relative">
+                <Image
+                  src={selectedDestination.image || "/placeholder.svg"}
+                  alt={selectedDestination.name}
+                  width={800}
+                  height={400}
+                  className="w-full h-80 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+                {/* Close Button */}
+                <button
+                  onClick={() => setSelectedDestination(null)}
+                  className="absolute top-6 right-6 bg-white/20 backdrop-blur-sm text-white rounded-full p-3 hover:bg-white/30 transition-all duration-300 transform hover:scale-110"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+
+                {/* Modal Header */}
+                <div className="absolute bottom-6 left-6 text-white">
+                  <div
+                    className={`inline-block bg-gradient-to-r ${getCategoryColor(selectedDestination.category)} px-4 py-2 rounded-full text-sm font-semibold mb-3`}
+                  >
+                    {selectedDestination.category}
+                  </div>
+                  <h3 className="text-3xl font-bold mb-2">{selectedDestination.name}</h3>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-1">
+                      <Star className="w-5 h-5 text-yellow-400 fill-current" />
+                      <span className="font-semibold">{selectedDestination.rating}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-8">
+                <p className="text-gray-700 mb-8 text-lg leading-relaxed">{selectedDestination.description}</p>
+
+                {/* In modal details, show all available fields from the database schema */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                  {selectedDestination.duration && (
+                    <div className="flex items-center gap-4">
+                      <div className="bg-emerald-100 p-3 rounded-full">
+                        <Clock className="w-6 h-6 text-emerald-600" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-900">Duration</div>
+                        <div className="text-gray-600">{selectedDestination.duration}</div>
+                      </div>
+                    </div>
+                  )}
+                  {selectedDestination.best_time && (
+                    <div className="flex items-center gap-4">
+                      <div className="bg-emerald-100 p-3 rounded-full">
+                        <Map className="w-6 h-6 text-emerald-600" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-900">Best Time</div>
+                        <div className="text-gray-600">{selectedDestination.best_time}</div>
+                      </div>
+                    </div>
+                  )}
+                  {selectedDestination.difficulty && (
+                    <div className="flex items-center gap-4">
+                      <div className="bg-emerald-100 p-3 rounded-full">
+                        <Users className="w-6 h-6 text-emerald-600" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-900">Difficulty</div>
+                        <div className="text-gray-600">{selectedDestination.difficulty}</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Fix highlights.map error in modal */}
+                <div className="mb-8">
+                  <h4 className="text-xl font-semibold text-gray-900 mb-4">Highlights</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {(Array.isArray(selectedDestination.highlights) ? selectedDestination.highlights : []).map((highlight: string, index: number) => (
+                      <div key={index} className="flex items-center gap-3">
+                        <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
+                        <span className="text-gray-700">{highlight}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <Button className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-4 rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105">
+                    Book This Destination
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    </section>
+    </motion.section>
   )
 }
