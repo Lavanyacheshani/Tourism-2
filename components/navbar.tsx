@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Compass, Sparkles, Globe, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSelector from './language-selector';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -126,41 +127,7 @@ const Navbar: React.FC = () => {
               </Link>
             ))}
             {/* Language Switcher */}
-            <div className="relative">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsLanguageOpen(!isLanguageOpen);
-                }}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-300 hover:bg-emerald-50 group ${
-                  isScrolled || !isHomePage ? 'text-gray-700 hover:text-emerald-600' : 'text-white hover:text-emerald-300'
-                }`}
-              >
-                <Globe className="w-4 h-4" />
-                <span className="text-sm font-medium">{currentLang.flag} {currentLang.code.toUpperCase()}</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isLanguageOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {/* Language Dropdown */}
-              {isLanguageOpen && (
-                <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden animate-fade-in">
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => handleLanguageChange(lang.code)}
-                      className={`w-full flex items-center space-x-3 px-4 py-3 text-left hover:bg-emerald-50 transition-colors duration-200 ${
-                        currentLanguage === lang.code ? 'bg-emerald-50 text-emerald-600' : 'text-gray-700'
-                      }`}
-                    >
-                      <span className="text-lg">{lang.flag}</span>
-                      <span className="font-medium">{lang.name}</span>
-                      {currentLanguage === lang.code && (
-                        <div className="ml-auto w-2 h-2 bg-emerald-500 rounded-full"></div>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <LanguageSelector />
             {/* Enhanced CTA Button */}
             <Link
               href="/contact"
@@ -243,4 +210,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

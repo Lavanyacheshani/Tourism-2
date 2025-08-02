@@ -287,3 +287,27 @@ body {
   background: rgba(16, 185, 129, 0.3);
   color: inherit;
 }
+
+/* Google Translate Overrides */
+.goog-te-gadget {
+  font-family: inherit !important;
+  color: white !important;
+}
+
+.goog-te-gadget-simple {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.goog-te-menu-value {
+  color: white !important;
+}
+
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
