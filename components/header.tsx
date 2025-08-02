@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 
 const Header: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [playVideo, setPlayVideo] = useState(false); // New state
   const { t } = useLanguage();
 
   const slides = [
@@ -31,12 +32,13 @@ const Header: React.FC = () => {
   ];
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 6000);
-
-    return () => clearInterval(timer);
-  }, [slides.length]);
+    if (!playVideo) {
+      const timer = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+      }, 6000);
+      return () => clearInterval(timer);
+    }
+  }, [slides.length, playVideo]);
 
   const scrollToContent = () => {
     window.scrollTo({
@@ -52,25 +54,36 @@ const Header: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
     >
-      {/* Background Slides with Enhanced Parallax */}
-      {slides.map((slide, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-all duration-2000 ${
-            index === currentSlide
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-110"
-          }`}
-        >
+      {/* Background: Either video or image slides */}
+      {playVideo ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          src="/hero/1.mp4"
+        />
+      ) : (
+        slides.map((slide, index) => (
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-110 animate-parallax"
-            style={{ backgroundImage: `url(${slide.image})` }}
-          />
-          {/* Enhanced Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70" />
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/20 via-transparent to-sapphire-900/20" />
-        </div>
-      ))}
+            key={index}
+            className={`absolute inset-0 transition-all duration-2000 ${
+              index === currentSlide
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-110"
+            }`}
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-110 animate-parallax"
+              style={{ backgroundImage: `url(${slide.image})` }}
+            />
+            {/* Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70" />
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/20 via-transparent to-sapphire-900/20" />
+          </div>
+        ))
+      )}
 
       {/* Animated Particles */}
       <div className="absolute inset-0 overflow-hidden">
@@ -102,20 +115,20 @@ const Header: React.FC = () => {
         <div className="absolute top-1/2 left-3/4 w-24 h-24 bg-gradient-to-br from-lotus-400/10 to-ruby-400/10 rounded-full animate-bounce-gentle blur-lg" />
       </div>
 
-      {/* Enhanced Content */}
+      {/* Content */}
       <div className="relative z-10 h-full flex items-center justify-center">
         <div className="text-center text-white px-2 sm:px-4 max-w-xs sm:max-w-2xl lg:max-w-6xl mx-auto">
           {/* Accent Text */}
           <div className="mb-4 animate-fade-in-down">
             <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 sm:px-6 py-2 text-xs sm:text-sm font-medium text-white/90">
               <MapPin className="w-4 h-4" />
-              {slides[currentSlide].accent}
+              {playVideo ? "Discover Planet Holiday" : slides[currentSlide].accent}
             </span>
           </div>
 
-          {/* Main Title with Gradient */}
+          {/* Title */}
           <h1 className="heading-primary text-3xl sm:text-5xl lg:text-9xl mb-4 sm:mb-6 animate-fade-in-up break-words">
-            {slides[currentSlide].title}
+            {playVideo ? "Your Adventure Starts Here" : slides[currentSlide].title}
           </h1>
 
           {/* Subtitle */}
@@ -123,10 +136,12 @@ const Header: React.FC = () => {
             className="text-base sm:text-xl lg:text-2xl mb-8 sm:mb-12 animate-fade-in-up opacity-90 font-light max-w-xs sm:max-w-2xl lg:max-w-4xl mx-auto"
             style={{ animationDelay: "0.2s" }}
           >
-            {slides[currentSlide].subtitle}
+            {playVideo
+              ? "Experience Sri Lanka like never before through vibrant visuals."
+              : slides[currentSlide].subtitle}
           </p>
 
-          {/* Enhanced CTA Buttons */}
+          {/* CTA Buttons */}
           <div
             className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 animate-fade-in-up"
             style={{ animationDelay: "0.4s" }}
@@ -136,42 +151,45 @@ const Header: React.FC = () => {
               whileTap={{ scale: 0.97 }}
               className="group relative overflow-hidden bg-gradient-to-r from-emerald-600 via-teal-600 to-sapphire-600 text-white px-10 py-4 rounded-full text-lg font-semibold shadow-2xl hover:shadow-emerald-500/25 transition-all duration-500"
             >
-              <span className="relative z-10">{t("exploreTours")}</span>
+              <span className="relative z-10">{t("Explore Tours")}</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-teal-500 to-sapphire-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </motion.button>
 
             <motion.button
+              onClick={() => setPlayVideo(true)}
               whileHover={{ scale: 1.08, boxShadow: "0 8px 32px 0 rgba(16, 185, 129, 0.15)" }}
               whileTap={{ scale: 0.97 }}
               className="group flex items-center gap-3 glass-effect text-white px-10 py-4 rounded-full text-lg font-semibold border border-white/30 hover:bg-white/20 transition-all duration-500"
             >
               <Play className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-              <span>{t("watchVideo")}</span>
+              <span>{t("Watch Video")}</span>
             </motion.button>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Slide Indicators */}
-      <div className="absolute bottom-16 sm:bottom-32 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-3 z-20">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`relative overflow-hidden transition-all duration-500 ${
-              index === currentSlide
-                ? "w-12 h-3 bg-gradient-to-r from-emerald-400 to-teal-400 shadow-glow"
-                : "w-3 h-3 bg-white/30 hover:bg-white/50"
-            } rounded-full`}
-          >
-            {index === currentSlide && (
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-300 to-teal-300 animate-shimmer" />
-            )}
-          </button>
-        ))}
-      </div>
+      {/* Slide Indicators */}
+      {!playVideo && (
+        <div className="absolute bottom-16 sm:bottom-32 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-3 z-20">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`relative overflow-hidden transition-all duration-500 ${
+                index === currentSlide
+                  ? "w-12 h-3 bg-gradient-to-r from-emerald-400 to-teal-400 shadow-glow"
+                  : "w-3 h-3 bg-white/30 hover:bg-white/50"
+              } rounded-full`}
+            >
+              {index === currentSlide && (
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-300 to-teal-300 animate-shimmer" />
+              )}
+            </button>
+          ))}
+        </div>
+      )}
 
-      {/* Enhanced Scroll Indicator */}
+      {/* Scroll Indicator */}
       <button
         onClick={scrollToContent}
         className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce-gentle cursor-pointer hover:text-emerald-300 transition-colors duration-300 group"

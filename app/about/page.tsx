@@ -1,5 +1,7 @@
+"use client";
 import React from 'react';
 import { Users, Award, Globe, Heart } from 'lucide-react';
+import { motion } from "framer-motion";
 
 const About: React.FC = () => {
   return (
@@ -81,11 +83,11 @@ const About: React.FC = () => {
               <p className="text-gray-600">
                 Committed to preserving Sri Lanka's natural beauty for future generations
               </p>
-                  </div>
+            </div>
             <div className="bg-white/90 rounded-2xl shadow-lg p-8 text-center hover:shadow-emerald-200 transition-shadow duration-300 animate-scale-in" style={{ animationDelay: '0.3s' }}>
               <div className="bg-gradient-to-br from-emerald-100 to-teal-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5 shadow">
                 <Heart className="w-8 h-8 text-emerald-600" />
-                </div>
+              </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Personal Touch</h3>
               <p className="text-gray-600">
                 Every tour is personalized to create memories that last a lifetime
@@ -96,60 +98,49 @@ const About: React.FC = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-gradient-to-br from-white via-teal-50 to-emerald-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
+      <motion.section
+        className="py-20 bg-gradient-to-br from-gray-50 to-blue-50"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400 bg-clip-text text-transparent drop-shadow-lg animate-fade-in-up">
-              Meet Our Team
-            </h2>
-            <div className="flex justify-center">
-              <span className="inline-block w-24 h-1 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 mb-6 animate-grow-in"></span>
-            </div>
-            <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto font-medium animate-fade-in-up mb-2">
-              <span className="bg-white/70 px-3 py-1 rounded-xl shadow-sm">The passionate people behind your perfect Sri Lankan adventure</span>
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              The passionate people behind your perfect Sri Lankan adventure
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {[
-              {
-                name: 'Rajesh Fernando',
-                role: 'Founder & CEO',
-                image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg',
-                bio: 'With 15 years in tourism, Rajesh founded Planet Holiday to share his love for Sri Lanka with the world.',
-              },
-              {
-                name: 'Priya Wickramasinghe',
-                role: 'Head of Operations',
-                image: 'https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg',
-                bio: 'Priya ensures every detail of your journey is perfectly orchestrated, from arrival to departure.',
-              },
-              {
-                name: 'Chaminda Silva',
-                role: 'Lead Guide',
-                image: 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg',
-                bio: 'Our master storyteller who brings Sri Lankan history and culture to life with every tour.',
-              },
-            ].map((member, index) => (
-              <div
-                key={index}
-                className="text-center animate-scale-in bg-white/90 rounded-3xl shadow-xl p-10 hover:shadow-emerald-200 transition-shadow duration-300"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="relative mb-8 flex justify-center">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-40 h-40 rounded-full object-cover shadow-lg border-4 border-emerald-100"
-                  />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                <p className="text-emerald-600 font-semibold mb-2">{member.role}</p>
-                <p className="text-gray-600 max-w-xs mx-auto">{member.bio}</p>
-                  </div>
-            ))}
+
+          {/* Team Member */}
+          <div className="flex justify-center">
+            <motion.div
+              className="bg-white rounded-3xl shadow-lg overflow-hidden max-w-md w-full transform hover:scale-105 transition-all duration-500"
+              whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+            >
+              <div className="relative">
+                <img
+                  src="/about/a.jpeg"
+                  alt="Jaan Gunasekara"
+                  className="w-full h-80 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
+
+              <div className="p-8 text-center">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Jaan Gunasekara</h3>
+                <p className="text-emerald-600 font-semibold mb-4">Founder & CEO</p>
+                <p className="text-gray-600 leading-relaxed">
+                  Our master storyteller who brings Sri Lankan history and culture to life with every tour.
+                </p>
+              </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
+
     </div>
   );
 };

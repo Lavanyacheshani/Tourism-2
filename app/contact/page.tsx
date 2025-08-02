@@ -61,10 +61,28 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Construct WhatsApp message
+    const whatsappMessage = `New Contact Form Submission:\n` +
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n` +
+      `Phone: ${formData.phone}\n` +
+      `Tour Interest: ${formData.tourInterest}\n` +
+      `Travel Dates: ${formData.travelDates}\n` +
+      `Group Size: ${formData.groupSize}\n` +
+      `Message: ${formData.message}`;
+
+    const whatsappUrl = `https://wa.me/94701666202?text=${encodeURIComponent(whatsappMessage)}`;
+
     // Simulate async submission
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setIsSubmitted(true);
     setIsSubmitting(false);
+
+    // Open WhatsApp in a new tab/window
+    window.open(whatsappUrl, '_blank');
+
+
     setTimeout(() => {
       setIsSubmitted(false);
       setFormData({
@@ -263,7 +281,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-primary-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-primary-700 transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-primary-600 text-black py-4 rounded-lg font-semibold text-lg hover:bg-primary-700 transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:text-green-500"
                   >
                     {isSubmitting ? (
                       <>
@@ -308,9 +326,13 @@ export default function ContactPage() {
                       Office Address
                     </h4>
                     <p className="text-gray-600">
-                      123 Galle Road
+                      No 32/01
                       <br />
-                      Colombo 03, Sri Lanka
+                      Bandaranayaka mv.
+                      <br />
+                      Mahagonaduwa Morontuduwa.
+                      <br />
+                      Srilanka.
                       <br />
                       10300
                     </p>
@@ -326,11 +348,9 @@ export default function ContactPage() {
                       Phone Numbers
                     </h4>
                     <p className="text-gray-600">
-                      Primary: +94 77 123 4567
+                      WhatsApp: +94 76 304 8811
                       <br />
-                      Secondary: +94 11 234 5678
-                      <br />
-                      WhatsApp: +94 77 123 4567
+                      Mobile: +94 76 304 8811
                     </p>
                   </div>
                 </div>
@@ -373,8 +393,15 @@ export default function ContactPage() {
               </div>
 
               {/* Map */}
-              <div className="bg-gradient-to-br from-blue-100 via-teal-100 to-yellow-100 rounded-lg h-64 flex items-center justify-center shadow-inner">
-                <p className="text-teal-600 font-medium">Interactive Map Coming Soon</p>
+              <div className="rounded-lg h-64 flex items-center justify-center shadow-inner">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.7995744435936!2d79.8584824746884!3d6.914748493089538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2593cf65a1e81%3A0x24c1194f9c8944ca!2sYour%20Business%20Name!5e0!3m2!1sen!2slk!4v1627886400000!5m2!1sen!2slk"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                ></iframe>
               </div>
 
               {/* Quick Contact */}
@@ -384,13 +411,13 @@ export default function ContactPage() {
                 </h4>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a
-                    href="tel:+94771234567"
+                    href="tel:+94763048811"
                     className="flex-1 bg-gradient-to-r from-teal-500 to-blue-400 text-white py-3 px-4 rounded-lg text-center font-medium hover:from-teal-600 hover:to-blue-500 transition-colors duration-300 shadow"
                   >
                     Call Now
                   </a>
                   <a
-                    href="https://wa.me/94771234567"
+                    href="https://wa.me/94763048811"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 bg-gradient-to-r from-green-400 to-teal-400 text-white py-3 px-4 rounded-lg text-center font-medium hover:from-green-500 hover:to-teal-500 transition-colors duration-300 shadow"

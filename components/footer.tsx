@@ -76,12 +76,12 @@ export default function Footer() {
               {[
                 {
                   icon: MapPin,
-                  content: "123 Galle Road\nColombo 03, Sri Lanka\n10300",
+                  content: "No 32/01\n Bandaranayaka mv.\n Mahagonaduwan\n Moronthuduwa\nSri Lanka",
                   color: "text-emerald-400",
                 },
                 {
                   icon: Phone,
-                  content: "+94 77 123 4567\n24/7 Support Available",
+                  content: "+94 76 304 8811\n24/7 Support Available",
                   color: "text-teal-400",
                 },
                 {

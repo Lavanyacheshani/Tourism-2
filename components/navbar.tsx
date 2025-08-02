@@ -233,7 +233,7 @@ const Navbar: React.FC = () => {
                 onClick={() => setIsOpen(false)}
                 className="block mx-3 mt-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-4 py-3 rounded-xl text-center font-medium shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105"
               >
-                {t('bookNow')}
+                {t('Book Now')}
               </Link>
             </div>
           </div>
