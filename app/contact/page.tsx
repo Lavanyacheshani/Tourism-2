@@ -130,7 +130,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <div className="animate-slide-in-left bg-white/90 rounded-2xl shadow-xl p-8">
+            <div id="contact-form" className="animate-slide-in-left bg-white/90 rounded-2xl shadow-xl p-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-8">
                 Send us a Message
               </h2>
@@ -171,7 +171,7 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-300"
-                        placeholder="your@email.com"
+                        placeholder="info@planetholidaytravel.com"
                       />
                     </div>
                   </div>

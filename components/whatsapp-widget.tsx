@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 export default function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false)
 
-  const whatsappNumber = "+94771234567" // Replace with actual WhatsApp number
+  const whatsappNumber = "+94763048811" // Replace with actual WhatsApp number
   const message = encodeURIComponent("Hi! I'm interested in your Sri Lanka tour packages. Can you help me?")
 
   const openWhatsApp = () => {

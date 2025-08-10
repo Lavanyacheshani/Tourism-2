@@ -96,6 +96,17 @@ const Navbar: React.FC = () => {
 
   const currentLang = languages.find(lang => lang.code === currentLanguage) || languages[0];
 
+  // Add scroll function at the top of the component, after the constants
+  const scrollToContactForm = () => {
+    const contactForm = document.querySelector('#contact-form');
+    if (contactForm) {
+      contactForm.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // If not on contact page, navigate to contact page
+      window.location.href = '/contact#contact-form';
+    }
+  };
+
   return (
     <nav className={`fixed w-full z-50 transition-all duration-500 ${getNavbarClasses()}`}>
       <div className="container-custom">
@@ -129,14 +140,14 @@ const Navbar: React.FC = () => {
             {/* Language Switcher */}
             <LanguageSelector />
             {/* Enhanced CTA Button */}
-            <Link
-              href="/contact"
+            <button
+              onClick={scrollToContactForm}
               className="relative overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-2.5 rounded-full font-medium shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 transform hover:scale-105 transition-all duration-300 group"
             >
               <span className="relative z-10">{t('Book Now')}</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute inset-0 bg-shimmer animate-shimmer opacity-0 group-hover:opacity-30" />
-            </Link>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -195,13 +206,15 @@ const Navbar: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <Link
-                href="/contact"
-                onClick={() => setIsOpen(false)}
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  scrollToContactForm();
+                }}
                 className="block mx-3 mt-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-4 py-3 rounded-xl text-center font-medium shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105"
               >
                 {t('Book Now')}
-              </Link>
+              </button>
             </div>
           </div>
         </div>
