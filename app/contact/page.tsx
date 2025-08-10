@@ -364,11 +364,11 @@ export default function ContactPage() {
                       Email Addresses
                     </h4>
                     <p className="text-gray-600">
-                      General: info@planethoday.lk
+                      General: info@planetholidaytravel.com
                       <br />
-                      Bookings: bookings@planethoday.lk
+                      Bookings: info@planetholidaytravel.com
                       <br />
-                      Support: support@planethoday.lk
+                      Support: info@planetholidaytravel.com
                     </p>
                   </div>
                 </div>
