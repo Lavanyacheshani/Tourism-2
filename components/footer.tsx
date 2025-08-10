@@ -86,7 +86,7 @@ export default function Footer() {
                 },
                 {
                   icon: Mail,
-                  content: "info@planetholiday.lk\nResponse within 2 hours",
+                  content: "info@planetholidaytravel.com\nResponse within 2 hours",
                   color: "text-sapphire-400",
                 },
               ].map(({ icon: Icon, content, color }, index) => (

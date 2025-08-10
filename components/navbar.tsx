@@ -133,7 +133,7 @@ const Navbar: React.FC = () => {
               href="/contact"
               className="relative overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-2.5 rounded-full font-medium shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 transform hover:scale-105 transition-all duration-300 group"
             >
-              <span className="relative z-10">{t('bookNow')}</span>
+              <span className="relative z-10">{t('Book Now')}</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute inset-0 bg-shimmer animate-shimmer opacity-0 group-hover:opacity-30" />
             </Link>
