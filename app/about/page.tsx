@@ -98,48 +98,58 @@ const About: React.FC = () => {
       </section>
 
       {/* Team Section */}
-      <motion.section
-        className="py-20 bg-gradient-to-br from-gray-50 to-blue-50"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
+      <section className="py-20 bg-gradient-to-br from-white via-teal-50 to-emerald-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The passionate people behind your perfect Sri Lankan adventure
-            </p>
+            <h2 className="text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400 bg-clip-text text-transparent drop-shadow-lg animate-fade-in-up">
+              Meet Our Team
+            </h2>
+            <div className="flex justify-center">
+              <span className="inline-block w-24 h-1 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 mb-6 animate-grow-in"></span>
+            </div>
           </div>
 
-          {/* Team Member */}
-          <div className="flex justify-center">
-            <motion.div
-              className="bg-white rounded-3xl shadow-lg overflow-hidden max-w-md w-full transform hover:scale-105 transition-all duration-500"
-              whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
-            >
-              <div className="relative">
-                <img
-                  src="/about/a.jpeg"
-                  alt="Jaan Gunasekara"
-                  className="w-full h-80 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            {[
+              {
+                name: 'Jaan Gunasekara',
+                role: 'Founder & CEO',
+                image: '/about/a.jpeg',
+                bio: 'Our master storyteller who brings Sri Lankan history and culture to life with every tour.',
+              },
+              {
+                name: 'Malik Tariq',
+                role: 'Head of Operations - Asian Region',
+                image: '/about/malik.jpeg',
+                bio: 'Leading operations across Pakistan, Russia, Kazakhstan, Turkey, Georgia and other Asian countries.',
+              },
+              {
+                name: 'Marta Szatten',
+                role: 'Head of Operations - European Region',
+                image: '/about/marta.jpeg',
+                bio: 'Managing operations throughout Poland, Germany, Italy and all EU countries.',
+              },
+            ].map((member, index) => (
+              <div
+                key={index}
+                className="text-center animate-scale-in bg-white/90 rounded-3xl shadow-xl p-10 hover:shadow-emerald-200 transition-shadow duration-300"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="relative mb-8 flex justify-center">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-40 h-40 rounded-full object-cover shadow-lg border-4 border-emerald-100"
+                  />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                <p className="text-emerald-600 font-semibold mb-2">{member.role}</p>
+                <p className="text-gray-600 max-w-xs mx-auto">{member.bio}</p>
               </div>
-
-              <div className="p-8 text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Jaan Gunasekara</h3>
-                <p className="text-emerald-600 font-semibold mb-4">Founder & CEO</p>
-                <p className="text-gray-600 leading-relaxed">
-                  Our master storyteller who brings Sri Lankan history and culture to life with every tour.
-                </p>
-              </div>
-            </motion.div>
+            ))}
           </div>
         </div>
-      </motion.section>
+      </section>
 
     </div>
   );

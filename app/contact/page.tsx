@@ -72,7 +72,7 @@ export default function ContactPage() {
       `Group Size: ${formData.groupSize}\n` +
       `Message: ${formData.message}`;
 
-    const whatsappUrl = `https://wa.me/94701666202?text=${encodeURIComponent(whatsappMessage)}`;
+    const whatsappUrl = `https://wa.me/94763048811?text=${encodeURIComponent(whatsappMessage)}`;
 
     // Simulate async submission
     await new Promise((resolve) => setTimeout(resolve, 1500));
