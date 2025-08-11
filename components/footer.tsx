@@ -76,7 +76,7 @@ export default function Footer() {
               {[
                 {
                   icon: MapPin,
-                  content: "No 32/01\n Bandaranayaka mv.\n Mahagonaduwan\n Moronthuduwa\nSri Lanka",
+                  content: "No 32/01\n Bandaranayaka mv.\n Mahagonaduwa\n Moronthuduwa\nSri Lanka",
                   color: "text-emerald-400",
                 },
                 {
@@ -111,7 +111,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-16 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <span className="text-gray-400">© 2024 Planet Holiday. Made with</span>
+              <span className="text-gray-400">© 2025 Planet Holiday. Made with</span>
               <Heart className="h-4 w-4 text-red-400 animate-pulse" />
               <span className="text-gray-400">in Sri Lanka</span>
             </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Calendar, Users, Clock, Star } from "lucide-react"
+import { useRouter } from "next/navigation";
 
 // Category definitions matching the provided UI
 const categories = [
@@ -23,6 +24,8 @@ const getDifficultyColor = (difficulty: string) => {
 }
 
 export default function ActivitiesPage() {
+  const router = useRouter();
+  
   const [activities, setActivities] = useState<any[]>([])
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedActivity, setSelectedActivity] = useState<any | null>(null)
@@ -66,6 +69,13 @@ export default function ActivitiesPage() {
   const filteredActivities = selectedCategory === "all"
     ? mappedActivities
     : mappedActivities.filter((activity) => activity.category === selectedCategory)
+
+  // Add this function after your existing state declarations
+  const handleBookNow = (activity: any) => {
+    const message = `Hello, I would like to book the "${activity.title}" activity.\n\nDuration: ${activity.duration}\nGroup Size: ${activity.groupSize}\nDifficulty: ${activity.difficulty}`;
+    
+    router.push(`/contact?tourInterest=${encodeURIComponent(activity.title)}&message=${encodeURIComponent(message)}`);
+  };
 
   return (
     <div className="pt-20">
@@ -152,7 +162,13 @@ export default function ActivitiesPage() {
                         <Star className="w-5 h-5 text-yellow-500 fill-current" />
                         <span className="text-base font-semibold text-gray-800">{activity.rating ? `${activity.rating}/5` : "4.5/5"}</span>
                       </div>
-                      <button className="bg-primary-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-primary-700 transition-colors duration-300">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent modal from opening
+                          handleBookNow(activity);
+                        }}
+                        className="bg-primary-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-primary-700 transition-colors duration-300"
+                      >
                         Book Now
                       </button>
                     </div>
@@ -230,10 +246,22 @@ export default function ActivitiesPage() {
                 </div>
               </div>
               <div className="flex gap-4">
-                <button className="flex-1 bg-primary-600 text-white py-4 rounded-full font-semibold text-lg hover:bg-primary-700 transition-colors duration-300">
+                <button 
+                  onClick={() => {
+                    setSelectedActivity(null); // Close modal
+                    handleBookNow(selectedActivity);
+                  }}
+                  className="flex-1 bg-primary-600 text-white py-4 rounded-full font-semibold text-lg hover:bg-primary-700 transition-colors duration-300"
+                >
                   Book This Activity
                 </button>
-                <button className="px-8 py-4 border-2 border-primary-600 text-primary-600 rounded-full font-semibold hover:bg-primary-50 transition-colors duration-300">
+                <button 
+                  onClick={() => {
+                    setSelectedActivity(null); // Close modal
+                    router.push('/contact#contact-form');
+                  }}
+                  className="px-8 py-4 border-2 border-primary-600 text-primary-600 rounded-full font-semibold hover:bg-primary-50 transition-colors duration-300"
+                >
                   Contact Us
                 </button>
               </div>

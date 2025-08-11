@@ -6,8 +6,11 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MapPin, Star, Camera, Sparkles, Clock, Users, Heart, Map } from "lucide-react"
 import { motion } from "framer-motion"
+import { useRouter } from 'next/navigation';
 
 export default function FeaturedDestinations({ showAll = false }: { showAll?: boolean }) {
+  const router = useRouter();
+  
   const [activeCategory, setActiveCategory] = useState("All")
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [visibleCards, setVisibleCards] = useState<number[]>([])
@@ -70,6 +73,17 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
 
   // Only show first 6 destinations for the grid
   const shownDestinations = showAll ? filteredDestinations : filteredDestinations.slice(0, 6);
+
+  const handleBooking = (destination: any) => {
+    const message = `Hello, I would like to book a tour to "${destination.name}".\n\n` +
+      `Category: ${destination.category}\n` +
+      `Location: ${destination.location}\n` +
+      `Duration: ${destination.duration || 'Not specified'}\n` +
+      `Best Time: ${destination.best_time || 'Not specified'}\n` +
+      `Highlights: ${Array.isArray(destination.highlights) ? destination.highlights.join(', ') : 'None specified'}`;
+
+    router.push(`/contact?tourInterest=${encodeURIComponent(destination.name)}&message=${encodeURIComponent(message)}`);
+  };
 
   return (
     <motion.section
@@ -208,9 +222,13 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
                   <motion.button
                     whileHover={{ scale: 1.05, boxShadow: "0 8px 32px 0 rgba(16, 185, 129, 0.15)" }}
                     whileTap={{ scale: 0.97 }}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent modal from opening
+                      handleBooking(destination);
+                    }}
                     className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-emerald-500/25 transform hover:scale-105 transition-all duration-300 group-hover:from-emerald-500 group-hover:to-teal-500"
                   >
-                    Explore Destination
+                    Book Now
                   </motion.button>
                 </div>
               </div>
@@ -329,7 +347,13 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
                 </div>
 
                 <div className="flex gap-4">
-                  <Button className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-4 rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105">
+                  <Button 
+                    onClick={() => {
+                      setSelectedDestination(null);
+                      handleBooking(selectedDestination);
+                    }}
+                    className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-4 rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105"
+                  >
                     Book This Destination
                   </Button>
                 </div>

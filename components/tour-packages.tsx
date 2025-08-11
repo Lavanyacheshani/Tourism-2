@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Calendar, Users, MapPin, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from "framer-motion";
+import { useRouter } from 'next/navigation';
 
 interface Tour {
   id: number;
@@ -17,6 +18,7 @@ interface Tour {
 }
 
 const TourPackages: React.FC = () => {
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -118,6 +120,13 @@ const TourPackages: React.FC = () => {
     return filteredTours.slice(startIndex, startIndex + toursPerSlide);
   };
 
+  const handleBookNow = (tour: Tour) => {
+    const message = `Hello, I would like to book the "${tour.title}" tour package.\n\nDuration: ${tour.duration}\nHighlights: ${tour.highlights.join(', ')}`;
+    
+    // Navigate to contact page with tour details
+    router.push(`/contact?tourInterest=${encodeURIComponent(tour.title)}&message=${encodeURIComponent(message)}`);
+  };
+
   return (
     <motion.section
       className="py-20 bg-white"
@@ -212,6 +221,7 @@ const TourPackages: React.FC = () => {
                   <motion.button
                     whileHover={{ scale: 1.05, boxShadow: "0 8px 32px 0 rgba(16, 185, 129, 0.15)" }}
                     whileTap={{ scale: 0.97 }}
+                    onClick={() => handleBookNow(tour)}
                     className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-full font-semibold shadow-lg hover:from-emerald-700 hover:to-teal-700 transition-colors duration-300"
                   >
                     Book Now
