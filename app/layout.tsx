@@ -13,7 +13,6 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Planet Holiday - Discover Sri Lanka",
   description: "Explore the beautiful island of Sri Lanka with our curated travel packages and experiences.",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -24,6 +23,9 @@ export default function RootLayout({
   const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/logo.ico" type="image/x-icon" />
+      </head>
       <body className={inter.className}>
         <AdminAuthProvider>
           <LanguageProvider>
