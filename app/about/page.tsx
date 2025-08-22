@@ -115,20 +115,36 @@ const About: React.FC = () => {
                 name: 'Jaan Gunasekara',
                 role: 'Founder & CEO',
                 image: '/about/a.jpeg',
-                bio: 'Our master storyteller who brings Sri Lankan history and culture to life with every tour.',
+                bio: (
+                  <>
+                    Our master storyteller who brings Sri Lankan history and culture to life with every tour.<br />
+                  </>
+                ),
               },
               {
                 name: 'Malik Tariq',
                 role: 'Head of Operations - Asian Region',
                 image: '/about/malik.jpeg',
-                bio: 'Leading operations across Pakistan, Russia, Kazakhstan, Turkey, Georgia and other Asian countries.',
+                bio: (
+                  <>
+                    Leading operations across Pakistan, Russia, Kazakhstan, Turkey, Georgia and other Asian countries.<br />
+                    <span className="font-semibold text-gray-700">Email:</span> <a href="mailto:pakcaspian@gmail.com" className="text-emerald-600 underline">pakcaspian@gmail.com</a><br />
+                    <span className="font-semibold text-gray-700">Mobile:</span> <a href="tel:+923335704520" className="text-emerald-600 underline">+92 333 5704520</a>
+                  </>
+                ),
               },
               {
                 name: 'Marta Szatten',
                 role: 'Head of Operations - European Region',
                 image: '/about/marta.jpeg',
-                bio: 'Managing operations throughout Poland, Germany, Italy and all EU countries.',
-              },
+                bio: (
+                  <>
+                    Managing operations throughout Poland, Germany, Italy and all EU countries.<br />
+                    <span className="font-semibold text-gray-700">Email:</span> <a href="mailto:martaszatten@o2.pl" className="text-emerald-600 underline">martaszatten@o2.pl</a><br />
+                    <span className="font-semibold text-gray-700">Mobile:</span> <a href="tel:+48505073713" className="text-emerald-600 underline">+48 505 073 713</a>
+                  </>
+                ),
+              }
             ].map((member, index) => (
               <div
                 key={index}
