@@ -12,7 +12,13 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Planet Holiday - Discover Sri Lanka",
-  description: "Explore the beautiful island of Sri Lanka with our curated travel packages and experiences.",
+  description:
+    "Explore the beautiful island of Sri Lanka with our curated travel packages and experiences.",
+  icons: {
+    icon: "/favicon.ico", // favicon in /public folder
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 }
 
 export default function RootLayout({
@@ -20,17 +26,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : ""
+
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/logo.ico" type="image/x-icon" />
+        {/* fallback link for browsers */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={inter.className}>
         <AdminAuthProvider>
           <LanguageProvider>
             <Navbar />
-            {pathname === '/' && <Header />}
+            {pathname === "/" && <Header />}
             <main>{children}</main>
             <Footer />
           </LanguageProvider>
