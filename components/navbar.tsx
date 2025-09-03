@@ -3,16 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Compass, Sparkles, Globe, ChevronDown } from 'lucide-react';
+import { Menu, X, Compass, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageSelector from './language-selector';
+
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const pathname = usePathname();
-  const { currentLanguage, changeLanguage, t } = useLanguage();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,22 +21,7 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (isLanguageOpen) {
-        setIsLanguageOpen(false);
-      }
-    };
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, [isLanguageOpen]);
-
-  const languages = [
-    { code: 'en', name: 'English', flag: '🇬🇧' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
-    { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-    { code: 'pl', name: 'Polski', flag: '🇵🇱' },
-  ];
+  
 
   const navLinks = [
     { path: '/', label: t('Home') },
@@ -89,12 +73,7 @@ const Navbar: React.FC = () => {
     return 'text-white hover:bg-white/10';
   };
 
-  const handleLanguageChange = (languageCode: string) => {
-    changeLanguage(languageCode);
-    setIsLanguageOpen(false);
-  };
-
-  const currentLang = languages.find(lang => lang.code === currentLanguage) || languages[0];
+  
 
   // Add scroll function at the top of the component, after the constants
   const scrollToContactForm = () => {
@@ -137,8 +116,6 @@ const Navbar: React.FC = () => {
                 }`} />
               </Link>
             ))}
-            {/* Language Switcher */}
-            <LanguageSelector />
             {/* Enhanced CTA Button */}
             <button
               onClick={scrollToContactForm}
@@ -183,29 +160,7 @@ const Navbar: React.FC = () => {
                   {link.label}
                 </Link>
               ))}
-              {/* Mobile Language Switcher */}
-              <div className="px-4 py-3">
-                <div className="text-sm font-medium text-gray-600 mb-2">Language</div>
-                <div className="grid grid-cols-2 gap-2">
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => {
-                        handleLanguageChange(lang.code);
-                        setIsOpen(false);
-                      }}
-                      className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm transition-all duration-300 ${
-                        currentLanguage === lang.code
-                          ? 'bg-emerald-100 text-emerald-600'
-                          : 'bg-gray-100 text-gray-700 hover:bg-emerald-50'
-                      }`}
-                    >
-                      <span>{lang.flag}</span>
-                      <span>{lang.code.toUpperCase()}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+              
               <button
                 onClick={() => {
                   setIsOpen(false);

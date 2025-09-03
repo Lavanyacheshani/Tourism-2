@@ -3,11 +3,13 @@ import TourPackages from "@/components/tour-packages"
 import Testimonials from "@/components/testimonials"
 import WhatsAppWidget from "@/components/whatsapp-widget"
 import Header from "@/components/header"
+import LanguageFlags from "@/components/language-flags"
 
 export default function HomePage() {
   return (
     <main className="min-h-screen">
       <Header />
+      <LanguageFlags />
       <FeaturedDestinations />
       <TourPackages />
       <Testimonials />
