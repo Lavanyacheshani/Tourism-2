@@ -27,14 +27,14 @@ export default function Footer() {
 
             <div className="flex space-x-6">
               {[
-                { icon: Facebook, color: "hover:text-blue-400", bg: "hover:bg-blue-400/10" },
-                { icon: Instagram, color: "hover:text-pink-400", bg: "hover:bg-pink-400/10" },
-                { icon: Twitter, color: "hover:text-sky-400", bg: "hover:bg-sky-400/10" },
-                { icon: Youtube, color: "hover:text-red-400", bg: "hover:bg-red-400/10" },
-              ].map(({ icon: Icon, color, bg }, index) => (
+                  { icon: Facebook, href: "https://www.facebook.com/share/1BQ3SzhgV8/", color: "hover:text-blue-400", bg: "hover:bg-blue-400/10" },
+                  { icon: Instagram, href: "https://www.instagram.com/planetholidaytravell?igsh=Z2RyeDJ6bWlteDdt", color: "hover:text-pink-400", bg: "hover:bg-pink-400/10" },
+                  { icon: Twitter, href: "#", color: "hover:text-sky-400", bg: "hover:bg-sky-400/10" },
+                  { icon: Youtube, href: "#", color: "hover:text-red-400", bg: "hover:bg-red-400/10" },
+              ].map(({ icon: Icon, color, bg, href }, index) => (
                 <a
                   key={index}
-                  href="#"
+                  href={href}
                   className={`p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 transition-all duration-300 transform hover:scale-110 hover:shadow-lg ${color} ${bg}`}
                 >
                   <Icon className="h-5 w-5" />
