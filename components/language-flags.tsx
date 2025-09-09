@@ -32,38 +32,44 @@ export default function LanguageFlags() {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
   useEffect(() => {
-    const loadGoogleTranslate = () => {
-      // Initialize Google Translate
-      window.googleTranslateElementInit = () => {
-        new window.google.translate.TranslateElement(
-          {
-            pageLanguage: 'en',
-            includedLanguages: languages.map(lang => lang.code).join(','),
-            layout: window.google.translate.TranslateElement.FloatPosition.TOP_LEFT,
-            multilanguagePage: true,
-            autoDisplay: false,
-          },
-          'google_translate_element'
-        );
-      };
+    if (typeof window === 'undefined') return;
+    // Prevent duplicate injection
+    if (window.google && window.google.translate) {
+      setIsScriptLoaded(true);
+      return;
+    }
 
-      // Add Google Translate script if not already present
-      if (!document.getElementById('google-translate-script')) {
-        const script = document.createElement('script');
-        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-        script.id = 'google-translate-script';
-        document.body.appendChild(script);
+    window.googleTranslateElementInit = () => {
+      try {
+        if (window.google && window.google.translate) {
+          new window.google.translate.TranslateElement(
+            {
+              pageLanguage: 'en',
+              includedLanguages: languages.map(lang => lang.code).join(','),
+              layout: window.google.translate.TranslateElement.FloatPosition.TOP_LEFT,
+              multilanguagePage: true,
+              autoDisplay: false,
+            },
+            'google_translate_element'
+          );
+          setIsScriptLoaded(true);
+        }
+      } catch (e) {
+        console.error('Google translate init error', e);
       }
     };
 
-    loadGoogleTranslate();
+    if (!document.getElementById('google-translate-script')) {
+      const script = document.createElement('script');
+      script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.id = 'google-translate-script';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
 
     return () => {
-      // Cleanup
-      const script = document.getElementById('google-translate-script');
-      if (script) {
-        script.remove();
-      }
+      // Do not remove script to avoid re-inject loops; just noop the init
       (window as any).googleTranslateElementInit = undefined;
     };
   }, []);

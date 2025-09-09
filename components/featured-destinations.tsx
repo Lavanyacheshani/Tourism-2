@@ -6,77 +6,36 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MapPin, Star, Camera, Sparkles, Clock, Users, Heart, Map } from "lucide-react"
 import { motion } from "framer-motion"
-import { useRouter } from 'next/navigation'
-
-const MotionSection = motion.section
+import { useRouter } from 'next/navigation';
 
 export default function FeaturedDestinations({ showAll = false }: { showAll?: boolean }) {
   const router = useRouter();
   
   const [activeCategory, setActiveCategory] = useState("All")
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
-  const [visibleCards, setVisibleCards] = useState<number[]>([])
   const [selectedDestination, setSelectedDestination] = useState<any>(null)
   const [destinations, setDestinations] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    let mounted = true;
-    
     async function fetchDestinations() {
       try {
-        const res = await fetch("/api/destinations", {
-          headers: {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache'
-          }
-        });
-        if (!mounted) return;
-        
-        const data = await res.json();
-        if (Array.isArray(data) && mounted) {
-          setDestinations(data);
+        const res = await fetch("/api/destinations")
+        const data = await res.json()
+        if (Array.isArray(data)) {
+          setDestinations(data)
         }
       } catch (e) {
-        console.error('Error fetching destinations:', e);
-        if (mounted) {
-          setDestinations([]);
-        }
+        setDestinations([])
       } finally {
-        if (mounted) {
-          setLoading(false);
-        }
+        setLoading(false)
       }
     }
-    
-    fetchDestinations();
-    
-    return () => {
-      mounted = false;
-    };
+    fetchDestinations()
   }, [])
 
   const filteredDestinations =
     activeCategory === "All" ? destinations : destinations.filter((dest) => dest.category === activeCategory)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number.parseInt(entry.target.getAttribute("data-index") || "0")
-            setVisibleCards((prev) => [...prev, index])
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-
-    const cards = document.querySelectorAll(".destination-card")
-    cards.forEach((card) => observer.observe(card))
-
-    return () => observer.disconnect()
-  }, [filteredDestinations])
 
   const getCategoryColor = (category: string) => {
     const colors = {
@@ -107,12 +66,11 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
   };
 
   return (
-    <MotionSection
-      className="py-24 bg-gradient-to-b from-white via-emerald-50/30 to-teal-50/50 relative overflow-hidden"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 1, ease: "easeOut" }}
+    <motion.section
+      className="py-24 bg-gray-50 relative overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-dots opacity-30"></div>
@@ -154,57 +112,35 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
           ))}
         </div>
 
-        {/* Loading Skeleton */}
-        {loading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="animate-pulse">
-                <div className="bg-gray-200 rounded-3xl overflow-hidden">
-                  <div className="h-72 bg-gray-300"></div>
-                  <div className="p-8">
-                    <div className="h-6 bg-gray-300 rounded mb-4"></div>
-                    <div className="h-4 bg-gray-200 rounded w-2/3 mb-3"></div>
-                    <div className="h-4 bg-gray-200 rounded mb-6"></div>
-                    <div className="h-10 bg-gray-300 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
         {/* Enhanced Destinations Grid */}
-        {!loading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {shownDestinations.map((destination, index) => (
-              <motion.div
-                key={destination.id}
-                data-index={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                onClick={() => setSelectedDestination(destination)}
-                onMouseEnter={() => setHoveredCard(destination.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className="destination-card group cursor-pointer"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {shownDestinations.map((destination, index) => (
+            <div
+              key={destination.id}
+              data-index={index}
+              className="destination-card group cursor-pointer bg-white"
+              onClick={() => setSelectedDestination(destination)}
+              onMouseEnter={() => setHoveredCard(destination.id)}
+              onMouseLeave={() => setHoveredCard(null)}
             >
-              <div className="relative bg-white rounded-3xl shadow-soft overflow-hidden hover:shadow-soft-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+              <div className="relative bg-white rounded-3xl shadow-md overflow-hidden">
                 {/* Image Container with Overlay Effects */}
-                <div className="relative overflow-hidden h-72">
+                <div className="relative overflow-hidden h-72 bg-white">
+                  <div className="absolute inset-0 bg-gray-100 animate-pulse"></div>
                   <Image
                     src={destination.image || "/placeholder.svg"}
                     alt={destination.name}
                     width={600}
                     height={400}
+                    className="relative w-full h-full object-cover"
                     loading="eager"
-                    priority={index < 3}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    placeholder="blur"
-                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRseHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                    sizes="(max-width: 768px) 100vw,
+                           (max-width: 1200px) 50vw,
+                           33vw"
                   />
 
                   {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                   {/* Category Badge */}
                   <Badge
@@ -281,8 +217,6 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
           ))}
         </div>
 
-        </div>
-
         {/* Call to Action */}
         {!showAll && (
           <div className="text-center mt-20">
@@ -301,18 +235,8 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
 
         {/* Enhanced Modal */}
         {selectedDestination && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            >
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+            <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-scale-in-bounce shadow-2xl">
               <div className="relative">
                 <Image
                   src={selectedDestination.image || "/placeholder.svg"}
@@ -396,7 +320,7 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {(Array.isArray(selectedDestination.highlights) ? selectedDestination.highlights : []).map((highlight: string, index: number) => (
                       <div key={index} className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full" />
+                        <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
                         <span className="text-gray-700">{highlight}</span>
                       </div>
                     ))}
@@ -406,8 +330,8 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
                 <div className="flex gap-4">
                   <Button 
                     onClick={() => {
-                      setSelectedDestination(null)
-                      handleBooking(selectedDestination)
+                      setSelectedDestination(null);
+                      handleBooking(selectedDestination);
                     }}
                     className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-4 rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105"
                   >
@@ -415,9 +339,10 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
                   </Button>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
       </div>
-    </MotionSection>
+    </motion.section>
   )
+}

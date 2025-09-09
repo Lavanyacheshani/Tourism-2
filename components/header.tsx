@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 const Header: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [playVideo, setPlayVideo] = useState(false); // New state
+  const [isMounted, setIsMounted] = useState(false);
+  const [particles, setParticles] = useState<{ left: string; top: string; delay: string; duration: string; hue: string }[]>([]);
   const { t } = useLanguage();
 
   const slides = [
@@ -32,6 +34,7 @@ const Header: React.FC = () => {
   ];
 
   useEffect(() => {
+    setIsMounted(true);
     if (!playVideo) {
       const timer = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -39,6 +42,18 @@ const Header: React.FC = () => {
       return () => clearInterval(timer);
     }
   }, [slides.length, playVideo]);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    const makeParticle = () => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      delay: `${Math.random() * 6}s`,
+      duration: `${4 + Math.random() * 4}s`,
+      hue: `hue-rotate(${Math.random() * 120}deg)`
+    });
+    setParticles(Array.from({ length: 30 }, () => makeParticle()));
+  }, [isMounted]);
 
   const scrollToContent = () => {
     window.scrollTo({
@@ -85,28 +100,30 @@ const Header: React.FC = () => {
         ))
       )}
 
-      {/* Animated Particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(30)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute animate-float opacity-30"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 6}s`,
-              animationDuration: `${4 + Math.random() * 4}s`,
-            }}
-          >
-            <Sparkles
-              className="w-2 h-2 text-white"
+      {/* Animated Particles (client-only to avoid hydration mismatch) */}
+      {isMounted && (
+        <div className="absolute inset-0 overflow-hidden" suppressHydrationWarning>
+          {particles.map((p, i) => (
+            <div
+              key={i}
+              className="absolute animate-float opacity-30"
               style={{
-                filter: `hue-rotate(${Math.random() * 120}deg)`,
+                left: p.left,
+                top: p.top,
+                animationDelay: p.delay,
+                animationDuration: p.duration,
               }}
-            />
-          </div>
-        ))}
-      </div>
+            >
+              <Sparkles
+                className="w-2 h-2 text-white"
+                style={{
+                  filter: p.hue,
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Floating Geometric Shapes */}
       <div className="absolute inset-0">
