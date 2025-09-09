@@ -6,7 +6,9 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MapPin, Star, Camera, Sparkles, Clock, Users, Heart, Map } from "lucide-react"
 import { motion } from "framer-motion"
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
+
+const MotionSection = motion.section
 
 export default function FeaturedDestinations({ showAll = false }: { showAll?: boolean }) {
   const router = useRouter();
@@ -19,20 +21,39 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let mounted = true;
+    
     async function fetchDestinations() {
       try {
-        const res = await fetch("/api/destinations")
-        const data = await res.json()
-        if (Array.isArray(data)) {
-          setDestinations(data)
+        const res = await fetch("/api/destinations", {
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
+        if (!mounted) return;
+        
+        const data = await res.json();
+        if (Array.isArray(data) && mounted) {
+          setDestinations(data);
         }
       } catch (e) {
-        setDestinations([])
+        console.error('Error fetching destinations:', e);
+        if (mounted) {
+          setDestinations([]);
+        }
       } finally {
-        setLoading(false)
+        if (mounted) {
+          setLoading(false);
+        }
       }
     }
-    fetchDestinations()
+    
+    fetchDestinations();
+    
+    return () => {
+      mounted = false;
+    };
   }, [])
 
   const filteredDestinations =
@@ -86,7 +107,7 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
   };
 
   return (
-    <motion.section
+    <MotionSection
       className="py-24 bg-gradient-to-b from-white via-emerald-50/30 to-teal-50/50 relative overflow-hidden"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -133,19 +154,39 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
           ))}
         </div>
 
+        {/* Loading Skeleton */}
+        {loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="bg-gray-200 rounded-3xl overflow-hidden">
+                  <div className="h-72 bg-gray-300"></div>
+                  <div className="p-8">
+                    <div className="h-6 bg-gray-300 rounded mb-4"></div>
+                    <div className="h-4 bg-gray-200 rounded w-2/3 mb-3"></div>
+                    <div className="h-4 bg-gray-200 rounded mb-6"></div>
+                    <div className="h-10 bg-gray-300 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Enhanced Destinations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {shownDestinations.map((destination, index) => (
-            <div
-              key={destination.id}
-              data-index={index}
-              className={`destination-card group cursor-pointer animate-scale-in-bounce ${
-                visibleCards.includes(index) ? "animate-scale-in" : "opacity-0"
-              }`}
-              style={{ animationDelay: `${index * 0.15}s` }}
-              onClick={() => setSelectedDestination(destination)}
-              onMouseEnter={() => setHoveredCard(destination.id)}
-              onMouseLeave={() => setHoveredCard(null)}
+        {!loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {shownDestinations.map((destination, index) => (
+              <motion.div
+                key={destination.id}
+                data-index={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+                onClick={() => setSelectedDestination(destination)}
+                onMouseEnter={() => setHoveredCard(destination.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+                className="destination-card group cursor-pointer"
             >
               <div className="relative bg-white rounded-3xl shadow-soft overflow-hidden hover:shadow-soft-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
                 {/* Image Container with Overlay Effects */}
@@ -155,7 +196,11 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
                     alt={destination.name}
                     width={600}
                     height={400}
+                    loading="eager"
+                    priority={index < 3}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRseHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                   />
 
                   {/* Gradient Overlay */}
@@ -236,6 +281,8 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
           ))}
         </div>
 
+        </div>
+
         {/* Call to Action */}
         {!showAll && (
           <div className="text-center mt-20">
@@ -254,8 +301,18 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
 
         {/* Enhanced Modal */}
         {selectedDestination && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-            <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-scale-in-bounce shadow-2xl">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            >
               <div className="relative">
                 <Image
                   src={selectedDestination.image || "/placeholder.svg"}
@@ -339,7 +396,7 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {(Array.isArray(selectedDestination.highlights) ? selectedDestination.highlights : []).map((highlight: string, index: number) => (
                       <div key={index} className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
+                        <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full" />
                         <span className="text-gray-700">{highlight}</span>
                       </div>
                     ))}
@@ -349,8 +406,8 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
                 <div className="flex gap-4">
                   <Button 
                     onClick={() => {
-                      setSelectedDestination(null);
-                      handleBooking(selectedDestination);
+                      setSelectedDestination(null)
+                      handleBooking(selectedDestination)
                     }}
                     className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-4 rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105"
                   >
@@ -358,10 +415,9 @@ export default function FeaturedDestinations({ showAll = false }: { showAll?: bo
                   </Button>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         )}
       </div>
-    </motion.section>
+    </MotionSection>
   )
-}
