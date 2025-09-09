@@ -4,6 +4,20 @@ const { i18n } = nextI18NextConfig
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   i18n,
+  async redirects() {
+    return [
+      {
+        source: '/pl',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/pl/:path*',
+        destination: '/:path*',
+        permanent: true,
+      },
+    ]
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
