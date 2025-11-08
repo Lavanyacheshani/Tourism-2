@@ -375,7 +375,7 @@ const Testimonials: React.FC = () => {
                 Add Your Review
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col">
+            <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-xl rounded-xl">
               <DialogHeader>
                 <DialogTitle>Share Your Experience</DialogTitle>
               </DialogHeader>
