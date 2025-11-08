@@ -7,6 +7,7 @@ import { AdminAuthProvider } from "@/contexts/AdminAuthContext"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
 import Navbar from "@/components/navbar"
+import { Toaster } from "@/components/ui/sonner"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -42,6 +43,7 @@ export default function RootLayout({
             {pathname === "/" && <Header />}
             <main>{children}</main>
             <Footer />
+            <Toaster />
           </LanguageProvider>
         </AdminAuthProvider>
       </body>

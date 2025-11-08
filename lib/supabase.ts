@@ -7,12 +7,22 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Admin client for server-side operations (API routes)
-export const supabaseAdmin = createClient(supabaseUrl, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  },
-})
+// Note: This should only be used in server-side code (API routes)
+// For better type safety, consider using lib/supabase-server.ts instead
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+export const supabaseAdmin = serviceRoleKey
+  ? createClient(supabaseUrl, serviceRoleKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    })
+  : (() => {
+      if (typeof window === "undefined") {
+        console.warn("SUPABASE_SERVICE_ROLE_KEY is not set. Admin operations will fail.")
+      }
+      return null
+    })()
 
 // Types for our database tables
 export interface Destination {
@@ -87,4 +97,17 @@ export interface Activity {
   published: boolean
   created_at: string
   updated_at: string
+}
+
+export interface Review {
+  id: number
+  name: string
+  country: string
+  tour: string
+  comment: string
+  rating: number
+  date: string
+  avatar: string | null
+  approved: boolean
+  created_at: string
 }
