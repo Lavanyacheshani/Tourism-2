@@ -132,18 +132,6 @@ const About: React.FC = () => {
                     <span className="font-semibold text-gray-700">Mobile:</span> <a href="tel:+923335704520" className="text-emerald-600 underline">+92 333 5704520</a>
                   </>
                 ),
-              },
-              {
-                name: 'Marta Szatten',
-                role: 'Head of Operations - European Region',
-                image: '/about/marta.jpeg',
-                bio: (
-                  <>
-                    Managing operations throughout Poland, Germany, Italy and all EU countries.<br />
-                    <span className="font-semibold text-gray-700">Email:</span> <a href="mailto:martaszatten@o2.pl" className="text-emerald-600 underline">martaszatten@o2.pl</a><br />
-                    <span className="font-semibold text-gray-700">Mobile:</span> <a href="tel:+48505073713" className="text-emerald-600 underline">+48 505 073 713</a>
-                  </>
-                ),
               }
             ].map((member, index) => (
               <div
